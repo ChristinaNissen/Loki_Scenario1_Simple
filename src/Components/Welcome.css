@@ -47,9 +47,11 @@
 }
 
 .welcome-illustration img {
-  width: 400px;
+  width: 100%;
+  max-width: 600px;
   border-radius: 8px;
-  margin: 32px 0 0 0;
+  display: block;
+  margin: 32px 32px auto;
 }
 
 .welcome-section {
@@ -58,8 +60,8 @@
   padding: 32px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   margin: 32px 0 0 0;
-  min-width: 400px;
-  max-width: 600px;
+  width: 500px;      /* Set your desired fixed width */
+  max-width: 90vw;   /* Responsive for smaller screens */
 }
 
 .welcome-section h2 {
@@ -84,4 +86,44 @@
 
 .navbar-links a:hover {
   color: #000; /* Darker text on hover */
+}
+
+.accordion {
+  width: 100%;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #eee;
+}
+
+.accordion-title {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 16px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #222;
+  outline: none;
+  transition: background 0.2s;
+}
+
+.accordion-title:hover {
+  background: #fffbe6;
+}
+
+.accordion-arrow {
+  font-size: 1rem;
+  margin-left: 8px;
+}
+
+.accordion-content {
+  padding: 0 0 16px 0;
+  color: #444;
+  font-size: 1rem;
 }

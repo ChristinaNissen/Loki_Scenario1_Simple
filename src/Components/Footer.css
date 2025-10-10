@@ -1,0 +1,78 @@
+.footer {
+  background: #f7f7f7;
+  border-top: 1px solid #e0e0e0;
+  padding: 32px 0 0 0;
+  margin-top: 48px;
+  font-size: 15px;
+  color: #222;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto 24px auto;
+}
+
+.footer-section {
+  min-width: 180px;
+}
+
+.footer-section h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section li {
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.footer-bottom {
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;   /* Adds top and bottom padding */
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-logo img {
+  height: 20px;           /* Smaller logo */
+  width: auto;
+}
+
+.footer-logo span {
+  font-weight: bold;
+  font-size: 0.95rem;     /* Smaller text */
+}
+
+.footer-portal {
+  font-weight: normal;
+  font-size: 0.85rem;     /* Smaller portal text */
+  margin-left: 8px;
+  color: #666;
+}
+
+.footer-copyright {
+  color: #888;
+  font-size: 0.85rem;     /* Smaller copyright */
+}

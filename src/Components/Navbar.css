@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  height: 60px;
   padding: 0 32px;
   z-index: 1000;
   box-sizing: border-box;
@@ -16,42 +16,46 @@
 .navbar-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   font-weight: bold;
   min-width: 0;
   flex-shrink: 1;
 }
 
 .navbar-logo span {
-  font-size: 1.75rem; /* Reduce from 2.5rem */
+  font-size: 1rem; /* Smaller font */
   font-weight: bold;
-  margin-left: 8px;
+  margin-left: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .navbar-logo img {
-  height: 40px;      /* Adjust as needed for your navbar height */
+  height: 28px;
   width: auto;
   vertical-align: middle;
-  margin-right: 12px;
+  margin-right: 4px;
 }
 
 .navbar-links {
   display: flex;
-  gap: 24px;
-  flex-shrink: 1;
+  gap: 20px;
+  align-items: center;
 }
 
 .navbar-links a {
   color: #222;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
-  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  padding: 7px 16px; /* Add padding here */
+  border-radius: 10px; /* Add border-radius here for consistency */
+  transition: background 0.2s, color 0.2s;
 }
 
 .navbar-links a:hover {
-  color: #000;
+background: #e6be00;;
 }

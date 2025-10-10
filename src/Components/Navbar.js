@@ -1,4 +1,5 @@
 import React from "react";
+import { MdHelpOutline, MdHome } from "react-icons/md";
 import "./Navbar.css";
 
 const Navbar = () => (
@@ -11,8 +12,14 @@ const Navbar = () => (
       <span>Agency for Online Voting</span>
     </div>
     <nav className="navbar-links">
-      <a href="/help">Help</a>
-      <a href="/">Home</a>
+      <a href="/help">
+        <MdHelpOutline size={20} style={{ verticalAlign: "middle", marginRight: 4 }} />
+        Help
+      </a>
+      <a href="/">
+        <MdHome size={20} style={{ verticalAlign: "middle", marginRight: 4 }} />
+        Home
+      </a>
     </nav>
   </header>
 );
