@@ -6,7 +6,7 @@ const StudyInfo2 = () => {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate('/visualselection');
+    navigate('/welcome');
   };
 
   return (
