@@ -41,20 +41,20 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  gap: 16px;  /* This gives equal spacing between all child items */
 }
 
 .navbar-links {
   display: flex;
-  gap: 20px;
-  align-items: center;
+  gap: 16px;  /* Equal spacing between the Help and Home links */
 }
 
 .navbar-link {
   display: inline-flex;
   align-items: center;
-  margin-right: 16px; /* Adjust margin as needed */
   text-decoration: none;
   color: inherit;
+  /* No extra right margin here since the gap on navbar-right handles spacing */
 }
 
 .navbar-icon {
@@ -78,7 +78,7 @@
   right: 0;
   background: #fff;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
   margin-top: 4px;
   border-radius: 4px;
