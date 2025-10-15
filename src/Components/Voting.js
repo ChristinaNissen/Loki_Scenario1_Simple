@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import "./Voting-system.css";
 import "./Voting.css";
@@ -18,7 +18,6 @@ const candidates = [
 ];
 
 const Voting = () => {
-  const location = useLocation();
   const { userSelectedYes } = useContext(VoteContext);
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");
@@ -65,7 +64,7 @@ const Voting = () => {
       <main className="welcome-main">
         <ProcessBar steps={steps} currentStep={currentStep} />
 
-        <h1 style={{ marginTop: "70px" }}> Voting</h1>
+        <h1> Voting</h1>
         <p className="text-main">
           Please select your preferred candidate below.
         </p>

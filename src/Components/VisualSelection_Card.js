@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import "./Voting-system.css";
 import "./VisualSelection_Card.css";
@@ -22,22 +22,51 @@ const staticCard = {
 };
 
 const randomEmojis = [
-  // Existing ones from your code
   "🌟", "🍀", "🔥", "🎈", "🌸", "⚡", "🍎", "🍌", "🍇", "🍉",
-  // Smileys & Emotion
-  "😀","😃","😄","😁","😆","😅","😂","🤣","😊","😇","🙂","🙃","😉","😌","😍","🥰","😘","😗","😙","😚","😋","😛","😜","🤪","😝","🤑","🤗","🤭","🤫","🤔","🤐","🤨","😐","😑","😶","😏","😒","🙄","😬","🤥","😌","😔","😪","🤤","😴","😷","🤒","🤕","🤢","🤮","🤧","🥵","🥶","🥴","😵","🤯","🤠","🥳","😎","🤓","🧐","😕","😟","🙁","☹️","😮","😯","😲","😳","🥺","😦","😧","😨","😰","😥","😢","😭","😱","😖","😣","😞","😓","😩","😫","🥱","😤","😡","😠","🤬","😈","👿","💀","☠️","🤡","👹","👺","👻","👽","👾","🤖",
-  // People & Body
-  "👋","🤚","🖐️","✋","🖖","👌","🤌","🤏","✌️","🤞","🫰","🤟","🤘","🤙","🫵","🫱","🫲","🫳","🫴","👏","🙌","👐","🤲","🤝","🙏","✍️","💅","🤳","💪","🦾","🦵","🦶","👂","🦻","👃","🧠","🦷","🦴","👀","👁️","👅","👄","🫦",
-  // Animals & Nature
-  "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐻‍❄️","🐨","🐯","🦁","🐮","🐷","🐽","🐸","🐵","🙈","🙉","🙊","🐒","🐔","🐧","🐦","🐤","🐣","🐥","🦆","🦅","🦉","🦇","🐺","🐗","🐴","🦄","🐝","🪱","🐛","🦋","🐌","🐞","🐜","🪰","🪲","🪳","🦟","🦗","🕷️","🕸️","🦂","🐢","🐍","🦎","🦖","🦕","🐙","🦑","🦐","🦞","🦀","🐡","🐠","🐟","🐬","🐳","🐋","🦈","🐊","🐅","🐆","🦓","🦍","🦧","🐘","🦣","🦛","🦏","🐪","🐫","🦒","🦘","🦬","🐃","🐂","🐄","🐎","🐖","🐏","🐑","🦙","🐐","🦌","🐕","🐩","🦮","🐕‍🦺","🐈","🐈‍⬛","🪶","🐓","🦃","🦤","🦚","🦜","🦢","🦩","🕊️","🐇","🦝","🦨","🦡","🦫","🦦","🦥","🐁","🐀","🐿️","🦔",
-  // Food & Drink
-  "🍏","🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅","🍆","🥑","🥦","🥬","🥒","🌶️","🫑","🌽","🥕","🫒","🧄","🧅","🥔","🍠","🥐","🥯","🍞","🥖","🥨","🥞","🧇","🧀","🍖","🍗","🥩","🥓","🍔","🍟","🍕","🌭","🥪","🌮","🌯","🫔","🥙","🧆","🥚","🍳","🥘","🍲","🫕","🥣","🥗","🍿","🧈","🧂","🥫","🍱","🍘","🍙","🍚","🍛","🍜","🍝","🍠","🍢","🍣","🍤","🍥","🥮","🍡","🥟","🥠","🥡","🦪","🍦","🍧","🍨","🍩","🍪","🎂","🍰","🧁","🥧","🍫","🍬","🍭","🍮","🍯","🍼","🥛","☕","🫖","🍵","🍶","🍾","🍷","🍸","🍹","🍺","🍻","🥂","🥃","🫗","🥤","🧋","🧃","🧉","🧊",
-  // Activities
-  "⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓","🏸","🥅","🏒","🏑","🥍","🏏","🪃","🥌","🛷","⛸️","🥊","🥋","🥇","🥈","🥉","🏆","🎽","🎿","🛼","🛹","🛶","⛵","🚤","🛥️","🛳️","⛴️","🚢","✈️","🛩️","🛫","🛬","🪂","💺","🚁","🚟","🚠","🚡","🛰️","🚀","🛸",
-  // Objects & Symbols
-  "⌚","📱","📲","💻","⌨️","🖥️","🖨️","🖱️","🖲️","🕹️","🗜️","💽","💾","💿","📀","📼","📷","📸","📹","🎥","📽️","🎞️","📞","☎️","📟","📠","📺","📻","🎙️","🎚️","🎛️","⏱️","⏲️","⏰","🕰️","⌛","⏳","📡","🔋","🔌","💡","🔦","🕯️","🪔","🧯","🛢️","💸","💵","💴","💶","💷","🪙","💰","💳","🧾","💎","⚖️","🔧","🔨","⚒️","🛠️","⛏️","🔩","⚙️","🗜️","⚗️","🧪","🧫","🧬","🔬","🔭","📡","💉","💊","🩸","🩹","🩺","🚪","🛏️","🛋️","🪑","🚽","🚿","🛁","🪒","🧴","🧷","🧹","🧺","🧻","🪣","🧼","🪥","🧽","🧯","🛒","🚬","⚰️","🪦","⚱️","🏺",
-  // Flags (a few examples)
-  "🇺🇸","🇬🇧","🇨🇦","🇦🇺","🇫🇷","🇩🇪","🇮🇹","🇪🇸","🇯🇵","🇨🇳","🇰🇷","🇧🇷","🇮🇳","🇷🇺","🇿🇦"
+  "😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇",
+  "🙂", "🙃", "😉",
+  "😌","😍","🥰","😘","😗","😙","😚","😋","😛","😜","🤪","😝","🤑",
+  "🤗","🤭","🤫","🤔","🤐","🤨","😐","😑","😶","😏","😒","🙄","😬",
+  "🤥","😌","😔","😪","🤤","😴","😷","🤒","🤕","🤢","🤮","🤧","🥵",
+  "🥶","🥴","😵","🤯","🤠","🥳","😎","🤓","🧐","😕","😟","🙁","☹️",
+  "😮","😯","😲","😳","🥺","😦","😧","😨","😰","😥","😢","😭","😱",
+  "😖","😣","😞","😓","😩","😫","🥱","😤","😡","😠","🤬","😈","👿",
+  "💀","☠️","🤡","👹","👺","👻","👽","👾","🤖","👋","🤚","🖐️","✋",
+  "🖖","👌","🤌","🤏","✌️","🤞","🫰","🤟","🤘","🤙","🫵","🫱","🫲",
+  "🫳","🫴","👏","🙌","👐","🤲","🤝","🙏","✍️","💅","🤳","💪","🦾",
+  "🦵","🦶","👂","🦻","👃","🧠","🦷","🦴","👀","👁️","👅","👄","🫦",
+  "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐻‍❄️","🐨","🐯","🦁","🐮",
+  "🐷","🐽","🐸","🐵","🙈","🙉","🙊","🐒","🐔","🐧","🐦","🐤","🐣",
+  "🐥","🦆","🦅","🦉","🦇","🐺","🐗","🐴","🦄","🐝","🪱","🐛","🦋",
+  "🐌","🐞","🐜","🪰","🪲","🪳","🦟","🦗","🕷️","🕸️","🦂","🐢","🐍",
+  "🦎","🦖","🦕","🐙","🦑","🦐","🦞","🦀","🐡","🐠","🐟","🐬","🐳",
+  "🐋","🦈","🐊","🐅","🐆","🦓","🦍","🦧","🐘","🦣","🦛","🦏","🐪",
+  "🐫","🦒","🦘","🦬","🐃","🐂","🐄","🐎","🐖","🐏","🐑","🦙","🐐",
+  "🦌","🐕","🐩","🦮","🐕‍🦺","🐈","🐈‍⬛","🪶","🐓","🦃","🦤","🦚",
+  "🦜","🦢","🦩","🕊️","🐇","🦝","🦨","🦡","🦫","🦦","🦥","🐁","🐀",
+  "🐿️","🦔","🍏","🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍈",
+  "🍒","🍑","🥭","🍍","🥥","🥝","🍅","🍆","🥑","🥦","🥬","🥒","🌶️",
+  "🫑","🌽","🥕","🫒","🧄","🧅","🥔","🍠","🥐","🥯","🍞","🥖","🥨",
+  "🥞","🧇","🧀","🍖","🍗","🥩","🥓","🍔","🍟","🍕","🌭","🥪","🌮",
+  "🌯","🫔","🥙","🧆","🥚","🍳","🥘","🍲","🫕","🥣","🥗","🍿","🧈",
+  "🧂","🥫","🍱","🍘","🍙","🍚","🍛","🍜","🍝","🍠","🍢","🍣","🍤",
+  "🍥","🥮","🍡","🥟","🥠","🥡","🦪","🍦","🍧","🍨","🍩","🍪","🎂",
+  "🍰","🧁","🥧","🍫","🍬","🍭","🍮","🍯","🍼","🥛","☕","🫖","🍵",
+  "🍶","🍾","🍷","🍸","🍹","🍺","🍻","🥂","🥃","🫗","🥤","🧋","🧃",
+  "🧉","🧊","⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓",
+  "🏸","🥅","🏒","🏑","🥍","🏏","🪃","🥌","🛷","⛸️","🥊","🥋","🥇",
+  "🥈","🥉","🏆","🎽","🎿","🛼","🛹","🛶","⛵","🚤","🛥️","🛳️","⛴️",
+  "🚢","✈️","🛩️","🛫","🛬","🪂","💺","🚁","🚟","🚠","🚡","🛰️","🚀",
+  "🛸","⌚","📱","📲","💻","⌨️","🖥️","🖨️","🖱️","🖲️","🕹️","🗜️",
+  "💽","💾","💿","📀","📼","📷","📸","📹","🎥","📽️","🎞️","📞","☎️",
+  "📟","📠","📺","📻","🎙️","🎚️","🎛️","⏱️","⏲️","⏰","🕰️","⌛",
+  "⏳","📡","🔋","🔌","💡","🔦","🕯️","🪔","🧯","🛢️","💸","💵","💴",
+  "💶","💷","🪙","💰","💳","🧾","💎","⚖️","🔧","🔨","⚒️","🛠️","⛏️",
+  "🔩","⚙️","🗜️","⚗️","🧪","🧫","🧬","🔬","🔭","📡","💉","💊","🩸",
+  "🩹","🩺","🚪","🛏️","🛋️","🪑","🚽","🚿","🛁","🪒","🧴","🧷","🧹",
+  "🧺","🧻","🪣","🧼","🪥","🧽","🧯","🛒","🚬","⚰️","🪦","⚱️","🏺",
+  "🇺🇸","🇬🇧","🇨🇦","🇦🇺","🇫🇷","🇩🇪","🇮🇹","🇪🇸","🇯🇵","🇨🇳","🇰🇷","🇧🇷",
+  "🇮🇳","🇷🇺","🇿🇦"
 ];
 
 function generateDistinctColors(n) {
@@ -50,7 +79,6 @@ function generateDistinctColors(n) {
 }
 
 function getEmojiGridConfig(n) {
-  // Returns { columns, rows, positions } for 1–10
   switch (n) {
     case 1:
       return { columns: 1, rows: 1, positions: [[0, 0]] };
@@ -65,45 +93,42 @@ function getEmojiGridConfig(n) {
         columns: 3,
         rows: 3,
         positions: [
-          [0, 0], [2, 0], // top corners
-          [1, 1],         // center
-          [0, 2], [2, 2]  // bottom corners
+          [0, 0], [2, 0],
+          [1, 1],
+          [0, 2], [2, 2]
         ]
       };
     case 6:
-      // 6-card pattern: 2 columns, 3 rows
       return {
         columns: 2,
         rows: 3,
         positions: [
-          [0, 0], [1, 0], // top row
-          [0, 1], [1, 1], // middle row
-          [0, 2], [1, 2]  // bottom row
+          [0, 0], [1, 0],
+          [0, 1], [1, 1],
+          [0, 2], [1, 2]
         ]
       };
     case 7:
-      // 7-card pattern: 2 (top), 1 (centered), 2 (middle), 2 (bottom)
       return {
         columns: 2,
         rows: 5,
         positions: [
-          [0, 0], [1, 0],     // top row (2)
-          [0.5, 1],           // second row (centered)
-          [0, 2], [1, 2],     // third row (2)
-          [0, 3], [1, 3]      // fourth row (2)
+          [0, 0], [1, 0],
+          [0.5, 1],
+          [0, 2], [1, 2],
+          [0, 3], [1, 3]
         ]
       };
     case 8:
-      // 8-card pattern: 2 (top), 1 (centered), 2 (middle), 1 (centered), 2 (bottom)
       return {
         columns: 2,
         rows: 6,
         positions: [
-          [0, 0], [1, 0],     // top row (2)
-          [0.5, 1],           // second row (centered)
-          [0, 2], [1, 2],     // third row (2)
-          [0.5, 3],           // fourth row (centered)
-          [0, 4], [1, 4]      // fifth row (2)
+          [0, 0], [1, 0],
+          [0.5, 1],
+          [0, 2], [1, 2],
+          [0.5, 3],
+          [0, 4], [1, 4]
         ]
       };
     case 9:
@@ -117,28 +142,29 @@ function getEmojiGridConfig(n) {
         ]
       };
     case 10:
-      // 10-card pattern: 2 (top), 1 (centered), 2, 2, 1 (centered), 2 (bottom)
       return {
         columns: 2,
         rows: 7,
         positions: [
-          [0, 0], [1, 0],       // top row (2)
-          [0.5, 1],             // second row (centered)
-          [0, 2], [1, 2],       // third row (2)
-          [0, 3], [1, 3],       // fourth row (2)
-          [0.5, 4],             // fifth row (centered)
-          [0, 5], [1, 5]        // bottom row (2)
+          [0, 0], [1, 0],
+          [0.5, 1],
+          [0, 2], [1, 2],
+          [0, 3], [1, 3],
+          [0.5, 4],
+          [0, 5], [1, 5]
         ]
       };
     default:
-      // fallback to a square grid
       const columns = Math.ceil(Math.sqrt(n));
       const rows = Math.ceil(n / columns);
       const positions = [];
       let count = 0;
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < columns; x++) {
-          if (count++ < n) positions.push([x, y]);
+          if (count < n) {
+            positions.push([x, y]);
+            count++;
+          }
         }
       }
       return { columns, rows, positions };
@@ -146,16 +172,14 @@ function getEmojiGridConfig(n) {
 }
 
 function generateRandomCard() {
-  const numberOfEmojis = Math.floor(Math.random() * 10) + 1; // 1-10
+  const numberOfEmojis = Math.floor(Math.random() * 10) + 1;
   const emojiRef = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
   const colorRef = generateDistinctColors(20)[Math.floor(Math.random() * 20)];
   const config = getEmojiGridConfig(numberOfEmojis);
   return { numberOfEmojis, emojiRef, colorRef, config };
 }
 
-
 const PAGE_SIZE = 39;
-
 function getInitialCards() {
   const randomCards = Array.from({ length: 91 }, generateRandomCard);
   const insertIndex = Math.floor(Math.random() * PAGE_SIZE);
@@ -163,21 +187,21 @@ function getInitialCards() {
   return randomCards;
 }
 
- const VisualSelection = () => {
+const VisualSelection = () => {
   const navigate = useNavigate();
   const { userSelectedYes } = useContext(VoteContext);
 
   const stepsNo = ["Voted Before", "Voting", "Confirmation"];
   const stepsYes = ["Voted Before", "Identification of Previous Ballots", "Voting", "Confirmation"];
   const steps = userSelectedYes ? stepsYes : stepsNo;
-  const currentStep = userSelectedYes ? 2 : 0;  // adjust as needed
+  const currentStep = userSelectedYes ? 2 : 0;
 
   const [cards, setCards] = useState(() => getInitialCards());
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [showError, setShowError] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false); // new modal state
 
-  // Dynamically add 10 new cards each minute
   useEffect(() => {
     const interval = setInterval(() => {
       setCards(prev => [
@@ -192,39 +216,53 @@ function getInitialCards() {
   const pagedCards = cards.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   const handleSelect = (idx) => {
-    setSelected((prev) =>
-      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    setSelected(prev =>
+      prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
     );
   };
 
+  // Instead of navigating immediately, show the confirmation modal
   const handleNext = () => {
     if (selected.length > 0) {
-      navigate("/voting",{ state: { userSelectedYes: true } });
+      setShowConfirm(true);
     } else {
       setShowError(true);
     }
   };
 
   const closeError = () => setShowError(false);
+  
+  // When user confirms, navigate to voting
+  const confirmSelection = () => {
+    navigate("/voting", { state: { userSelectedYes: true } });
+  };
 
   return (
     <div className="page-wrapper">
       <main className="welcome-main">
         <ProcessBar steps={steps} currentStep={currentStep} />
-        <h1>Identification of previously cast ballots</h1>
-        <div className="welcome-desc">
-          Please select all items below that you have seen when casting your previous ballots.
+        <div className="intro-container">
+          <h1>Identification of previously cast ballots</h1>
+          <div className="text-main">
+            Please select all cards below that you have seen when casting your previous ballots.
+          </div>
+          <div className="security-box">
+            <p className="text-small">
+              <strong>Secure Voting Assurance:</strong><br />
+              Our voting system makes sure you can vote freely without any outside pressure.
+              Only you can update your vote so that your privacy is protected.
+            </p>
+          </div>
+          <div className="text-main">
+            You need to select <strong>all</strong> the cards below that you have seen when casting your previous ballots.
+            The system will not reveal if your selection is correct for security reasons.
+            Only the correct selection will ensure that your vote is counted.
+            If you are unsure or cannot remember your cards, please contact election officials at your polling station.
+          </div>
+          <div className="selected-count">
+            {selected.length} card{selected.length === 1 ? "" : "s"} selected.
+          </div>
         </div>
-        {/*
-<div className="header-box">
-  <p>
-    <strong>Anti-Coercion Feature:</strong> This part of the voting process ensures that all voters can vote freely without any external pressure or influence.
-  </p>
-  <p>
-    This security measure ensures that you are the only one who can update your vote.
-  </p>
-</div>
-*/}
         <div className="card" style={{ maxWidth: 1000, width: "100%" }}>
           <div className="visual-selection-grid">
             {pagedCards.map((card, idx) => {
@@ -304,14 +342,10 @@ function getInitialCards() {
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
-          <button
-            onClick={handleNext}
-            className="button"
-          >
+          <button onClick={handleNext} className="button">
             Confirm Selection
           </button>
         </div>
-
         {showError && (
           <div className="error-overlay">
             <div className="error-message">
@@ -319,6 +353,64 @@ function getInitialCards() {
               <button onClick={closeError} className="button">
                 Close
               </button>
+            </div>
+          </div>
+        )}
+        {showConfirm && (
+          <div className="modal-backdrop">
+            <div className="modal">
+              <h2>Confirm Your Selection</h2>
+              <div className="selected-cards-preview">
+                {selected.map(idx => {
+                  const card = cards[idx];
+                  return (
+                    <div
+                      key={idx}
+                      className="confirmation-card preview-item"
+                      style={{
+                        backgroundColor: card.colorRef,
+                        position: "relative",
+                        margin: "4px"
+                      }}
+                    >
+                      <span className="card-corner card-corner-top-left">{card.numberOfEmojis}</span>
+                      <span className="card-corner card-corner-bottom-right">{card.numberOfEmojis}</span>
+                      <div className="emoji-area">
+                        <div
+                          className="confirmation-emoji-grid"
+                          style={{
+                            gridTemplateColumns: `repeat(${card.config.columns}, 1fr)`,
+                            gridTemplateRows: `repeat(${card.config.rows}, 1fr)`
+                          }}
+                        >
+                          {card.config.positions.map(([x, y], i) => (
+                            <span
+                              key={i}
+                              className="confirmation-emoji"
+                              style={{
+                                fontSize: "30px", // smaller for preview
+                                gridColumn: x % 1 === 0 ? x + 1 : "1 / span 2",
+                                gridRow: y + 1,
+                                justifySelf: "center"
+                              }}
+                            >
+                              {card.emojiRef}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="modal-actions">
+                <button className="button" onClick={confirmSelection}>
+                  Yes, proceed
+                </button>
+                <button className="button-secondary" onClick={() => setShowConfirm(false)}>
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         )}

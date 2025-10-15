@@ -110,3 +110,10 @@
   font-size: 36px;
   line-height: 1;
 }
+
+.confirmation-datetime {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+}

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import "./Voting-system.css";
 import "./BallotConfirmation.css";
 import ProcessBar from "./ProcessBar.js"; 
 import VoteContext from "../Contexts/VoteContext";
-import { useContext } from "react";
+
 
 const staticCard = {
   numberOfEmojis: 6,
@@ -20,7 +20,7 @@ const staticCard = {
       [0, 2], [1, 2]
     ]
   }
-}; 
+};
 
 const randomWords = ["sheep", "tree", "moon", "star", "river", "cloud"];
 const randomEmojis = [
@@ -147,24 +147,18 @@ function getEmojiGridConfig(n) {
   }
 }
 
-const BallotConfirmation = ({ type = "card", ballotNumber = 12345}) => {
+const BallotConfirmation = ({ type = "card", ballotNumber = 12345 }) => {
   const navigate = useNavigate();
-    const { userSelectedYes } = useContext(VoteContext);
+  const { userSelectedYes } = useContext(VoteContext);
 
   const now = new Date();
   const dateTime = now.toLocaleString();
 
-   // Define the steps for each flow:
   const stepsNo = ["Voted Before", "Voting", "Confirmation"];
   const stepsYes = ["Voted Before", "Visual Selection", "Voting", "Confirmation"];
-
-  // Determine which steps array and current step to use.
-  // For "No": currentStep is 3.
-  // For "Yes": currentStep is 4.
   const steps = userSelectedYes ? stepsYes : stepsNo;
   const currentStep = userSelectedYes ? 4 : 3;
 
-  // Move these inside the component
   const randomColors = generateDistinctColors(20);
   const emojiRef = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
   const colorRef = randomColors[Math.floor(Math.random() * randomColors.length)];
@@ -174,22 +168,23 @@ const BallotConfirmation = ({ type = "card", ballotNumber = 12345}) => {
 
   return (
     <div className="page-wrapper">
-
       <main className="welcome-main">
         <ProcessBar steps={steps} currentStep={currentStep} />
-       <h1 style={{ marginTop: "70px" }}>Confirmation</h1>
-       <div className="text-main">
+        <h1>Confirmation</h1>
+        
+
+        
+        <div className="text-main">
           You have cast your ballot succesfully! Below is a visual presentation of your cast ballot.
 
     This is you need to remember in the case you want to update your vote. <strong>OBS!</strong> For security reasons, you should <strong>not share</strong>  this information with anyone and you should <strong>not save</strong> this visual presentation anywhere.
-</div>
+        </div>
 
         <div className="card-wide">
 
           <div className="confirmation-visual">
             {type === "words" && (
               <div className="confirmation-words">
-                <span className="confirmation-main">{wordRef}</span>
                 <div className="confirmation-date">{dateTime}</div>
               </div>
             )}
@@ -250,10 +245,14 @@ const BallotConfirmation = ({ type = "card", ballotNumber = 12345}) => {
                         {staticCard.emojiRef}
                       </span>
                     ))}
+                    
                   </div>
+                  
                 </div>
+                
               </div>
             )}
+        <div className="confirmation-datetime">{dateTime}</div>
           </div>
         
         </div>

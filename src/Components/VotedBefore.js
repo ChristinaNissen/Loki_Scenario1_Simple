@@ -39,9 +39,9 @@ const VotedBefore = () => {
 
   return (
     <div className="page-wrapper">
-      <main className="welcome-main" style={{ marginTop: "70px" }}>
+      <main className="welcome-main" >
         <ProcessBar steps={selected ? stepsYes : stepsNo} currentStep={1} />
-        <h1 style={{ marginTop: "70px" }}>Have you voted in this election before?</h1>
+        <h1>Have you voted in this election before?</h1>
         <p className="text-main" style={{ marginBottom: "1px" }}>
           Please select below whether you have voted in this election before or not.
         </p>
