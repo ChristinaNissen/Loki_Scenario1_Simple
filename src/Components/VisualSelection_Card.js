@@ -263,7 +263,7 @@ const VisualSelection = () => {
           </div>*/}
           
         </div>
-        <div className="card" style={{ maxWidth: 1000, width: "100%", position: "relative" }}>
+        <div className="card" style={{ maxWidth: 1000, width: "100%", position: "relative"}}>
           <div className="selected-count-inside">
             {selected.length} card{selected.length === 1 ? "" : "s"} selected
           </div>
@@ -280,7 +280,7 @@ const VisualSelection = () => {
           </div>
           {/* Wrap the grid with a container */}
           <div className="visual-selection-grid-container">
-            <div className="visual-selection-grid">
+            <div className="visual-selection-grid" style={{ marginTop: "20px" }}>
               {pagedCards.map((card, idx) => {
                 const globalIdx = page * PAGE_SIZE + idx;
                 return (
@@ -369,7 +369,7 @@ const VisualSelection = () => {
         {showConfirm && (
           <div className="modal-backdrop">
             <div className="modal">
-              <h2> Please review your chosen card(s) below. <br /> Do you wish to proceed?</h2>
+              <h2> Please review your chosen card{selected.length > 1 ? "s" : ""} below. <br /> Do you wish to proceed?</h2>
               <div className="selected-cards-preview">
                 {selected.map(idx => {
                   const card = cards[idx];

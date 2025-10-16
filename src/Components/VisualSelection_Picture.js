@@ -252,13 +252,13 @@ const VisualSelectionPicture = () => {
         </div>
         <div style={{ display: "flex", justifyContent: "center", marginTop: "32px" }}>
           <button onClick={handleNext} className="button">
-            Confirm Selection
+            Confirm selection
           </button>
         </div>
         {showError && (
           <div className="error-overlay">
             <div className="error-message">
-              <p>Please select at least one item before continuing.</p>
+              <p>Please select at least one item</p>
               <button onClick={closeError} className="button">
                 Close
               </button>
@@ -266,43 +266,20 @@ const VisualSelectionPicture = () => {
           </div>
         )}
         {showConfirm && (
-          <div className="modal-backdrop">
-            <div className="modal">
+          <div className="modal-backdrop-picture">
+            <div className="modal-picture">
               <h2>
                 Please review your chosen picture{selected.length > 1 ? "s" : ""} below.
                 <br /> Do you wish to proceed?
               </h2>
-              <div
-                className="selected-pictures-preview"
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  gap: "8px",
-                  marginBottom: "16px"
-                }}
-              >
+              <div className="selected-pictures-preview-picture">
                 {selected.map(idx => (
-                  <div key={idx} className="preview-item" style={{ width: "100px", height: "100px", overflow: "hidden", borderRadius: "4px" }}>
-                    <img
-                      src={items[idx]}
-                      alt={`preview-${idx}`}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
+                  <div key={idx} className="preview-item-picture">
+                    <img src={items[idx]} alt={`preview-${idx}`} />
                   </div>
                 ))}
               </div>
-              <div
-                className="modal-actions"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "16px",
-                  marginTop: "5px",
-                  marginBottom: "20px"
-                }}
-              >
+              <div className="modal-actions-picture">
                 <button className="button" onClick={confirmSelection}>
                   Yes, proceed
                 </button>
