@@ -17,7 +17,6 @@ import Navbar from './Components/Navbar';
 import './App.css';
 import VoteContext from "./Contexts/VoteContext";
 import PrivateModeWarning from './Components/PrivateModeWarning';
-import VisualSelection2 from './Components/Selection_Picture';
 
 
 function App() {

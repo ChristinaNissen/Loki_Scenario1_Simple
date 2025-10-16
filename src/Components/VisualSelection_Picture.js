@@ -99,24 +99,53 @@ import img93 from "../Images/kimono.jpg";
 import img94 from "../Images/ladybug.jpg";
 import img95 from "../Images/lamb.jpg";
 
-const allImages = [img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20,
-img21, img22, img23, img24, img25, img26, img27, img28, img29, img30, img31, img32, img33, img34, img35, img36, img37, img38, img39, img40,
-img41, img42, img43, img44, img45, img46, img47, img48, img49, img50, img51, img52, img53, img54, img55, img56, img57, img58, img59, img60,
-img61, img62, img63, img64, img65, img66, img67, img68, img69, img70, img71, img72, img73, img74, img75, img76, img77, img78, img79, img80,
-img81, img82, img83, img84, img85, img86, img87, img88, img89, img90, img91, img92, img93, img94, img95];
+const allImages = [
+  img4, img5, img6, img7, img8, img9, img10, img11, img12, img13,
+  img14, img15, img16, img17, img18, img19, img20, img21, img22, img23,
+  img24, img25, img26, img27, img28, img29, img30, img31, img32, img33,
+  img34, img35, img36, img37, img38, img39, img40, img41, img42, img43,
+  img44, img45, img46, img47, img48, img49, img50, img51, img52, img53,
+  img54, img55, img56, img57, img58, img59, img60, img61, img62, img63,
+  img64, img65, img66, img67, img68, img69, img70, img71, img72, img73,
+  img74, img75, img76, img77, img78, img79, img80, img81, img82, img83,
+  img84, img85, img86, img87, img88, img89, img90, img91, img92, img93,
+  img94, img95
+];
 
-const PAGE_SIZE = 39;
+const PAGE_SIZE = 40;
+
+// Helper function: Fisher-Yates shuffle
+const shuffleArray = (array) => {
+  const newArr = array.slice();
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+};
 
 const VisualSelectionPicture = () => {
   const { userSelectedYes } = useContext(VoteContext);
   const navigate = useNavigate();
-  const [items, setItems] = useState(allImages.slice(0, 50));
+
+  // Shuffle the images to randomize order
+  let shuffledImages = shuffleArray(allImages);
+
+  // Take the first 50 but ensure img5 is included.
+  let initialImages = shuffledImages.slice(0, 50);
+  if (!initialImages.includes(img5)) {
+    const randomIdx = Math.floor(Math.random() * initialImages.length);
+    initialImages[randomIdx] = img5;
+    // Optionally, reshuffle the subset to further randomize order:
+    initialImages = shuffleArray(initialImages);
+  }
+
+  const [items, setItems] = useState(initialImages);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [showError, setShowError] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false); // modal state
 
-  // Define the process bar steps similar to VisualSelection_Card
   const stepsNo = ["Voted Before", "Voting", "Confirmation"];
   const stepsYes = [
     "Voted Before",
@@ -127,7 +156,7 @@ const VisualSelectionPicture = () => {
   const steps = userSelectedYes ? stepsYes : stepsNo;
   const currentStep = userSelectedYes ? 2 : 0;
 
-  // Dynamically add new images every minute (using a fixed count here; adjust as needed)
+  // Dynamically add new images every minute; images appended are taken sequentially from allImages.
   useEffect(() => {
     const interval = setInterval(() => {
       setItems(prevItems => {
@@ -153,7 +182,6 @@ const VisualSelectionPicture = () => {
 
   const handleNext = () => {
     if (selected.length > 0) {
-      // Instead of navigating immediately, show the confirmation modal
       setShowConfirm(true);
     } else {
       setShowError(true);
@@ -161,7 +189,6 @@ const VisualSelectionPicture = () => {
   };
 
   const confirmSelection = () => {
-    // Now navigate to voting after confirmation
     navigate("/voting", { state: { userSelectedYes: true } });
   };
 
@@ -174,7 +201,7 @@ const VisualSelectionPicture = () => {
         <div className="intro-container">
           <h1>Identification of Previously Cast Ballots</h1>
           <div className="text-main">
-            Please select all cards below that you have seen when casting your previous ballots.
+            Please select all pictures below that you have seen when casting your previous ballots.
           </div>
           <div className="security-box">
             <p className="text-small">
@@ -189,29 +216,30 @@ const VisualSelectionPicture = () => {
           <div className="selected-count-inside">
             {selected.length} selected
           </div>
-          <div className="instruction-list">
+          <h1 style={{ width: "100%", textAlign: "left", margin: "0 0 10px 55px" }}>
+            Select your pictures
+          </h1>
+          <div className="instruction-list" style={{ maxWidth: "800px", margin: "0 auto 20px auto", textAlign:"left" }}>
             <ul>
-              <li>You need to remember this card if you want to update your vote later in the election.</li>
-              <li>
-                For security reasons, you should <strong>not share</strong> your cards with anyone, and you should <strong>not save</strong> them anywhere.
-              </li>
+              <li>You need to select all the pictures below that you have seen when casting your previous ballots.</li>
+              <li>The system will not reveal if your selection is correct for security reasons.</li>
+              <li>Only the correct selection will ensure that your vote gets updated and counted into the results.</li>
+              <li>If you are unsure or cannot remember your pictures, please contact election officials at your polling station.</li>
             </ul>
           </div>
-          <div className="visual-selection-grid-container">
-            <div className="visual-selection-grid">
-              {pagedItems.map((imgSrc, idx) => {
-                const globalIdx = page * PAGE_SIZE + idx;
-                return (
-                  <div
-                    key={globalIdx}
-                    className={`visual-selection-item${selected.includes(globalIdx) ? " selected" : ""}`}
-                    onClick={() => handleSelect(globalIdx)}
-                  >
-                    <img src={imgSrc} alt={`visual-${globalIdx}`} />
-                  </div>
-                );
-              })}
-            </div>
+          <div className="visual-select-grid-pictures">
+            {pagedItems.map((imgSrc, idx) => {
+              const globalIdx = page * PAGE_SIZE + idx;
+              return (
+                <div
+                  key={globalIdx}
+                  className={`visual-selection-picture${selected.includes(globalIdx) ? " selected" : ""}`}
+                  onClick={() => handleSelect(globalIdx)}
+                >
+                  <img src={imgSrc} alt={`visual-${globalIdx}`} />
+                </div>
+              );
+            })}
           </div>
           <div style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "24px" }}>
             <button className="button" onClick={() => setPage(page - 1)} disabled={page === 0}>
