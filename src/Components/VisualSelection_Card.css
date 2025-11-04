@@ -197,3 +197,184 @@
   padding: 0.2em 0.5em;
   word-break: break-word;
 }
+
+/* Card filter bar */
+.card-filter-card {
+  background: #fafbfc;
+  border-radius: 12px;
+  padding: 18px 24px 14px 24px;
+  margin: 0 auto 18px auto;
+  max-width: 700px;   /* Match Picture/Word filter width */
+  width: 100%;        /* Responsive */
+  border: 1.5px solid #d1d5db;
+  transition: border 0.2s;
+  box-sizing: border-box;
+}
+
+.card-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.card-filter-label {
+  font-weight: 500;
+  color: #444;
+  font-size: 1rem;
+  min-width: 150px;
+}
+
+.card-filter-input {
+  padding: 10px 14px;
+  width: 260px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+  background: #f7f7f7;
+  min-width: 100px;
+  flex: 1 1 120px;
+}
+
+.card-filter-input:focus {
+  border: 2px solid var(--primary-yellow, #ffd600) !important;
+  outline: none;
+}
+
+.card-filter-letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.card-filter-letter {
+  padding: 6px 13px;
+  background: #f7f7f7;
+  color: #222;
+  border: 1.5px solid #d1d5db;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, border 0.3s;
+}
+
+.card-filter-letter:hover,
+.card-filter-letter:focus {
+  background: rgba(255, 255, 204, 0.8);
+  color: #000;
+  border: 2px solid var(--primary-yellow-dark);
+}
+
+.card-filter-letter.active,
+.card-filter-letter[aria-pressed="true"] {
+  background: rgba(255, 255, 204, 0.8);
+  color: #000;
+  border: 2px solid var(--primary-yellow-dark);
+  box-shadow: 0 2px 8px #ffd60033;
+}
+
+.card-filter-clear {
+  margin-left: 10px;
+  padding: 6px 13px;
+  background: var(--error);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #d32f2f22;
+  transition: background 0.15s;
+}
+
+.card-filter-clear:hover,
+.card-filter-clear:focus {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1.5px solid var(--error);
+}
+
+.card-filter-card {
+  background: #fafbfc;
+  border-radius: 12px;
+  padding: 18px 24px 14px 24px;
+  margin: 0 auto 18px auto;
+  max-width: 700px;
+  border: 1.5px solid #d1d5db;
+  transition: border 0.2s;
+}
+
+.card-filter-headline {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.card-filter-instructions {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.card-filter-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  font-size: 1.1em;
+}
+
+.card-letter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 1.5em;
+}
+
+.card-no-pictures-message {
+  color: #444;
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: block;
+  grid-column: 1 / -1;
+}
+
+.filter-divider-visual-card {
+  border: none;
+  border-top: 1.5px solid #e0e0e0;
+  margin: 0px 0 18px 0;
+  width: 90%;
+}
+
+.card-corner {
+  position: absolute;
+  z-index: 1; /* or remove z-index if not needed */
+}

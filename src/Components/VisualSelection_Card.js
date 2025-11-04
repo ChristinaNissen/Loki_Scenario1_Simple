@@ -6,6 +6,7 @@ import "./VisualSelection_Card.css";
 import ProcessBar from "./ProcessBar.js";
 import VoteContext from "../Contexts/VoteContext";
 import { saveCorrectSelections, getVisualRepresentation, saveBallotSelections } from '../API/Voter.js'; // import getVisualRepresentation
+import Select from "react-select";
 
 const staticCard = {
   numberOfEmojis: 6,
@@ -299,6 +300,10 @@ const VisualSelection = () => {
   const [showConfirm, setShowConfirm] = useState(false); // new modal state
   const [visualRepresentation, setVisualRepresentation] = useState(null);
   const [isCorrectSelection, setIsCorrectSelection] = useState(null);
+  const [numberFilter, setNumberFilter] = useState("");
+  const [colorFilter, setColorFilter] = useState("");
+  const [emojiFilter, setEmojiFilter] = useState("");
+  const [search, setSearch] = useState(""); // Optional: free text search
 
   useEffect(() => {
   const interval = setInterval(() => {
@@ -324,8 +329,30 @@ const VisualSelection = () => {
     fetchVisual();
   }, []);
 
-  const totalPages = Math.ceil(cards.length / PAGE_SIZE);
-  const pagedCards = cards.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const filteredCards = cards.filter(card => {
+    // Card number filter
+    const matchesNumber = numberFilter === "" || card.numberOfEmojis === Number(numberFilter);
+
+    // Card color filter (case-insensitive, partial match)
+    const colorObj = COLOR_LIST.find(c => c.hex.toLowerCase() === card.colorRef.toLowerCase());
+    const colorName = colorObj ? colorObj.name.toLowerCase() : "";
+    const matchesColor = colorFilter === "" || colorName.includes(colorFilter.toLowerCase());
+
+    // Emoji filter
+    const matchesEmoji = emojiFilter === "" || card.emojiRef === emojiFilter;
+
+    // Optional: free text search (matches color name or emoji)
+    const matchesSearch =
+      search === "" ||
+      colorName.includes(search.toLowerCase()) ||
+      card.emojiRef.includes(search) ||
+      String(card.numberOfEmojis).includes(search);
+
+    return matchesNumber && matchesColor && matchesEmoji && matchesSearch;
+  });
+
+  const totalPages = Math.ceil(filteredCards.length / PAGE_SIZE);
+  const pagedCards = filteredCards.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   const handleSelect = (idx) => {
     setSelected(prev =>
@@ -391,6 +418,41 @@ const VisualSelection = () => {
   const closeError = () => setShowError(false);
 
 
+  // Prepare options from your cards
+  const numberOptions = [...new Set(cards.map(card => card.numberOfEmojis))]
+    .sort((a, b) => a - b)
+    .map(num => ({ value: num, label: num }));
+
+  const colorOptions = [...new Set(cards.map(card => {
+    const colorObj = COLOR_LIST.find(c => c.hex.toLowerCase() === card.colorRef.toLowerCase());
+    return colorObj ? colorObj.name : card.colorRef;
+  }))]
+    .sort((a, b) => a.localeCompare(b)) // <-- sort alphabetically
+    .map(name => {
+      const colorObj = COLOR_LIST.find(c => c.name === name);
+      return {
+        value: name,
+        label: (
+          <span>
+            <span style={{
+              display: "inline-block",
+              width: 16,
+              height: 16,
+              borderRadius: "50%",
+              background: colorObj ? colorObj.hex : "#ccc",
+              marginRight: 8,
+              border: "1px solid #bbb",
+              verticalAlign: "middle"
+            }} />
+            {name}
+          </span>
+        )
+      };
+    });
+
+  const emojiOptions = [...new Set(cards.map(card => card.emojiRef))]
+    .map(emoji => ({ value: emoji, label: emoji }));
+
   return (
     <div className="page-wrapper">
       <main className="welcome-main">
@@ -431,92 +493,172 @@ const VisualSelection = () => {
               <li>If you are unsure or cannot remember your cards, please contact election officials at your polling station.</li>
             </ul>
           </div>
+          <div className="card-filter-card">
+  <div className="card-filter-headline">Find your cards</div>
+  <div className="card-filter-instructions">
+    Filter by card number, color, and emoji.
+  </div>
+  <div className="card-filter-controls">
+    <div className="card-filter-row" style={{ gap: 12 }}>
+      <Select
+        className="card-filter-input"
+        options={numberOptions}
+        value={numberOptions.find(opt => opt.value === Number(numberFilter)) || null}
+        onChange={opt => setNumberFilter(opt ? String(opt.value) : "")}
+        placeholder="All numbers"
+        isClearable
+                menuPortalTarget={document.body}
+
+ styles={{
+          menuPortal: base => ({ ...base, zIndex: 9999 })
+        }}      />
+      <Select
+        className="card-filter-input"
+        options={colorOptions}
+        value={colorOptions.find(opt => opt.value === colorFilter) || null}
+        onChange={opt => setColorFilter(opt ? opt.value : "")}
+        placeholder="All colors"
+        isClearable
+                menuPortalTarget={document.body}
+
+ styles={{
+          menuPortal: base => ({ ...base, zIndex: 9999 })
+        }}      />
+      <Select
+        className="card-filter-input"
+        options={emojiOptions}
+        value={emojiOptions.find(opt => opt.value === emojiFilter) || null}
+        onChange={opt => setEmojiFilter(opt ? opt.value : "")}
+        placeholder="All emojis"
+        isClearable
+        isSearchable
+        menuPortalTarget={document.body}
+        styles={{
+          menuPortal: base => ({ ...base, zIndex: 9999 })
+        }}
+      />
+      
+      {(numberFilter || colorFilter || emojiFilter ) && (
+        <button
+          className="card-filter-clear"
+          onClick={() => {
+            setNumberFilter("");
+            setColorFilter("");
+            setEmojiFilter("");
+            
+          }}
+          type="button"
+        >
+          Clear
+        </button>
+      )}
+    </div>
+  </div>
+</div>
+<hr className="filter-divider-visual-card" style={{ width: "90%" }} />
+
           {/* Wrap the grid with a container */}
           <div className="visual-selection-grid-container">
             <div className="visual-selection-grid" style={{ marginTop: "20px" }}>
-              {pagedCards.map((card, idx) => {
-                const globalIdx = page * PAGE_SIZE + idx;
-                // Find the color object for this card
-                const colorObj = COLOR_LIST.find(c => c.hex.toLowerCase() === card.colorRef.toLowerCase()) || { name: "Color", hex: card.colorRef };
-                const emojiNames = {
-                  "😊": "smiling face",
-                  "🐑": "sheep",
-                  "⭐": "star",
-                  // ...add all emojis you use
-                };
-                const emojiName = emojiNames[card.emojiRef] || "emoji";
-                const cardLabel = `${colorObj.name} card with ${card.numberOfEmojis} ${card.emojiRef} ${emojiName}${card.numberOfEmojis > 1 ? "s" : ""}`;
-                const numberTextColor = blackTextColors.includes(colorObj.name) ? "#000" : "#fff";
-                return (
-                  <div className="visual-selection-card-container" key={globalIdx}>
-                    <div
-                      className={`confirmation-card visual-selection-item${selected.includes(globalIdx) ? " selected" : ""}`}
+              {pagedCards.length === 0 ? (
+    <p style={{
+      color: "#444",
+      fontSize: "1.1rem",
+      marginBottom: "24px",
+      maxWidth: "300px",
+      marginLeft: "auto",
+      marginRight: "auto",
+      textAlign: "center",
+      display: "block",
+      gridColumn: "1 / -1"
+    }}>
+      No cards found. Try adjusting your filters.
+    </p>
+  ) : (
+    pagedCards.map((card, idx) => {
+      const globalIdx = page * PAGE_SIZE + idx;
+      // Find the color object for this card
+      const colorObj = COLOR_LIST.find(c => c.hex.toLowerCase() === card.colorRef.toLowerCase()) || { name: "Color", hex: card.colorRef };
+      const emojiNames = {
+        "😊": "smiling face",
+        "🐑": "sheep",
+        "⭐": "star",
+        // ...add all emojis you use
+      };
+      const emojiName = emojiNames[card.emojiRef] || "emoji";
+      const cardLabel = `${colorObj.name} card with ${card.numberOfEmojis} ${card.emojiRef} ${emojiName}${card.numberOfEmojis > 1 ? "s" : ""}`;
+      const numberTextColor = blackTextColors.includes(colorObj.name) ? "#000" : "#fff";
+      return (
+        <div className="visual-selection-card-container" key={globalIdx}>
+          <div
+            className={`confirmation-card visual-selection-item${selected.includes(globalIdx) ? " selected" : ""}`}
+            style={{
+              backgroundColor: card.colorRef,
+              position: "relative",
+              cursor: "pointer"
+            }}
+            onClick={() => handleSelect(globalIdx)}
+          >
+            <span
+              className="card-corner card-corner-top-left"
+              style={{ color: numberTextColor }}
+            >
+              {card.numberOfEmojis}
+            </span>
+            <span
+              className="card-corner card-corner-bottom-right"
+              style={{ color: numberTextColor }}
+            >
+              {card.numberOfEmojis}
+            </span>
+            <div className="emoji-area">
+              <div
+                className="confirmation-emoji-grid"
+                style={{
+                  gridTemplateColumns: `repeat(${card.config.columns}, 1fr)`,
+                  gridTemplateRows: `repeat(${card.config.rows}, 1fr)`
+                }}
+              >
+                {card.config.positions.map(([x, y], i) => {
+                  let fontSize;
+                  switch (card.numberOfEmojis) {
+                    case 1: fontSize = "80px"; break;
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9: fontSize = "45px"; break;
+                    case 10: fontSize = "32px"; break;
+                    default: fontSize = "36px";
+                  }
+                  return (
+                    <span
+                      key={i}
+                      className="confirmation-emoji"
                       style={{
-                        backgroundColor: card.colorRef,
-                        position: "relative",
-                        cursor: "pointer"
+                        fontSize,
+                        gridColumn: x % 1 === 0 ? x + 1 : "1 / span 2",
+                        gridRow: y + 1,
+                        justifySelf: "center"
                       }}
-                      onClick={() => handleSelect(globalIdx)}
                     >
-                      <span
-                        className="card-corner card-corner-top-left"
-                        style={{ color: numberTextColor }}
-                      >
-                        {card.numberOfEmojis}
-                      </span>
-                      <span
-                        className="card-corner card-corner-bottom-right"
-                        style={{ color: numberTextColor }}
-                      >
-                        {card.numberOfEmojis}
-                      </span>
-                      <div className="emoji-area">
-                        <div
-                          className="confirmation-emoji-grid"
-                          style={{
-                            gridTemplateColumns: `repeat(${card.config.columns}, 1fr)`,
-                            gridTemplateRows: `repeat(${card.config.rows}, 1fr)`
-                          }}
-                        >
-                          {card.config.positions.map(([x, y], i) => {
-                            let fontSize;
-                            switch (card.numberOfEmojis) {
-                              case 1: fontSize = "80px"; break;
-                              case 2:
-                              case 3:
-                              case 4:
-                              case 5:
-                              case 6:
-                              case 7:
-                              case 8:
-                              case 9: fontSize = "45px"; break;
-                              case 10: fontSize = "32px"; break;
-                              default: fontSize = "36px";
-                            }
-                            return (
-                              <span
-                                key={i}
-                                className="confirmation-emoji"
-                                style={{
-                                  fontSize,
-                                  gridColumn: x % 1 === 0 ? x + 1 : "1 / span 2",
-                                  gridRow: y + 1,
-                                  justifySelf: "center"
-                                }}
-                              >
-                                {card.emojiRef}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card-label">
-                      {cardLabel}
-                    </div>
-                  </div>
-                );
-              })}
+                      {card.emojiRef}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="card-label">
+            {cardLabel}
+          </div>
+        </div>
+      );
+    })
+  )}
             </div>
           </div>
           {/* Navigation buttons below */}
