@@ -257,8 +257,6 @@ const VisualSelectionPicture = () => {
     console.log("Visual base name:", visualBaseName);
     console.log("Is correct:", isCorrect);
 
-    setIsCorrectSelection(isCorrect);
-
     try {
       // Save only the file names (not base names) for ballot selections
       await saveBallotSelections(selected.map(idx => {
