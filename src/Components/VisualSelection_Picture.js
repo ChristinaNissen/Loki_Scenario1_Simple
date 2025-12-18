@@ -126,7 +126,7 @@ const shuffleArray = (array) => {
 };
 
 const VisualSelectionPicture = () => {
-  const { userSelectedYes, selectedImage } = useContext(VoteContext);
+  const { userSelectedYes } = useContext(VoteContext);
   const navigate = useNavigate();
 
   // Shuffle the images to randomize order
@@ -147,7 +147,6 @@ const VisualSelectionPicture = () => {
   const [showError, setShowError] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false); // modal state
   const [visualRepresentation, setVisualRepresentation] = useState(null);
-  const [isCorrectSelection, setIsCorrectSelection] = useState(null);
 
 
   // Close modal if all words are removed

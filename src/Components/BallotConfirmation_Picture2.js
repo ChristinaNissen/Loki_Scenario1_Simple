@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import "./Voting-system.css";
@@ -6,7 +6,7 @@ import "./BallotConfirmation.css";
 import ProcessBar from "./ProcessBar.js"; 
 import { useLocation } from "react-router-dom";
 import VoteContext from "../Contexts/VoteContext";
-import { saveVisuaRepresentation, logoutVoter } from "../API/Voter";
+import { saveVisuaRepresentation } from "../API/Voter";
 
 // Import your images
 import img4 from "../Images/alligator.jpg";
@@ -102,6 +102,7 @@ import img93 from "../Images/kimono.jpg";
 import img94 from "../Images/ladybug.jpg";
 import img95 from "../Images/lamb.jpg";
 
+/*
 const allImages = [
   img4, img5, img6, img7, img8, img9, img10, img11, img12, img13,
   img14, img15, img16, img17, img18, img19, img20, img21, img22, img23,
@@ -113,7 +114,7 @@ const allImages = [
   img74, img75, img76, img77, img78, img79, img80, img81, img82, img83,
   img84, img85, img86, img87, img88, img89, img90, img91, img92, img93,
   img94, img95
-];
+];*/
 
 function BallotConfirmationPicture2(setIsLoggedIn) {
   const navigate = useNavigate();

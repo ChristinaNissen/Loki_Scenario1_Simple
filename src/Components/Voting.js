@@ -27,7 +27,7 @@ const Voting = () => {
   const [error, setError] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
-  const voter = getCurrentUser();
+  //const voter = getCurrentUser();
 
 
   const handleSubmit = (e) => {

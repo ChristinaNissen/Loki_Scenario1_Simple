@@ -4,7 +4,7 @@ import getCurrentUser, { getUserID, logoutVoter } from "../../API/Voter";
 import "./study-info.css";
 
 const StudyInfo2 = () => {
-  const voter = getCurrentUser();
+  //const voter = getCurrentUser();
   const navigate = useNavigate();
   const [userID, setUserID] = useState(null);
 
