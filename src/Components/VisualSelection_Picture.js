@@ -324,7 +324,7 @@ const VisualSelectionPicture = () => {
           <div className="filter-card">
   <div className="filter-headline">Find your pictures</div>
   <div className="filter-instructions">
-    Use the search box or click a letter to filter the list below to find your pictures.
+    Use the search box or click a letter to filter by the first letter of the word representing the item in the picture (e.g., A for Apple, B for Baby).
   </div>
   <div className="filter-controls">
     <div className="search-wrapper">
