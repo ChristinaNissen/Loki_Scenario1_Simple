@@ -112,7 +112,7 @@ const allImages = [
   img91
 ];
 
-const PAGE_SIZE = 40;
+const PAGE_SIZE = 39;
 
 // Helper function: Fisher-Yates shuffle
 const shuffleArray = (array) => {
@@ -128,19 +128,91 @@ const VisualSelectionPicture = () => {
   const { userSelectedYes } = useContext(VoteContext);
   const navigate = useNavigate();
 
-  // Shuffle the images to randomize order
-  let shuffledImages = shuffleArray(allImages);
+  // Helper function to get the starting letter of an image
+  const getImageLetter = (imgSrc) => {
+    const filename = imgSrc.split('/').pop().split('.')[0];
+    return filename.charAt(0).toLowerCase();
+  };
 
-  // Take the first 48 images and ensure alpaca (img2) is always included
-  let initialImages = shuffledImages.slice(0, 48);
-  if (!initialImages.includes(img2)) {
-    const randomIdx = Math.floor(Math.random() * initialImages.length);
-    initialImages[randomIdx] = img2;
-    // Optionally, reshuffle the subset to further randomize order:
-    initialImages = shuffleArray(initialImages);
-  }
+  // Group images by starting letter for better distribution
+  const groupByLetter = () => {
+    const groups = {};
+    allImages.forEach(img => {
+      const letter = getImageLetter(img);
+      if (!groups[letter]) groups[letter] = [];
+      groups[letter].push(img);
+    });
+    return groups;
+  };
 
-  const [items, setItems] = useState(initialImages);
+  // Create initial images with balanced distribution
+  const createBalancedInitialImages = () => {
+    const letterGroups = groupByLetter();
+    const letters = Object.keys(letterGroups);
+    
+    // Shuffle images within each letter group
+    Object.keys(letterGroups).forEach(letter => {
+      letterGroups[letter] = shuffleArray(letterGroups[letter]);
+    });
+    
+    // Take up to 2 images from each letter to create first page (39 images)
+    const firstPage = [];
+    const remaining = [];
+    
+    // First round: take 1 image from each letter
+    letters.forEach(letter => {
+      if (letterGroups[letter].length > 0) {
+        firstPage.push(letterGroups[letter].shift());
+      }
+    });
+    
+    // Second round: take another image from letters that have more
+    letters.forEach(letter => {
+      if (letterGroups[letter].length > 0 && firstPage.length < 39) {
+        firstPage.push(letterGroups[letter].shift());
+      }
+    });
+    
+    // If we still need more images to reach 39, keep adding
+    while (firstPage.length < 39) {
+      for (let letter of letters) {
+        if (letterGroups[letter].length > 0 && firstPage.length < 39) {
+          firstPage.push(letterGroups[letter].shift());
+        }
+      }
+    }
+    
+    // Collect remaining images
+    letters.forEach(letter => {
+      remaining.push(...letterGroups[letter]);
+    });
+    
+    // Ensure alpaca is in first page
+    if (!firstPage.includes(img2)) {
+      const alpacaInRemaining = remaining.indexOf(img2);
+      if (alpacaInRemaining >= 0) {
+        // Swap alpaca with a random image in first page
+        const randomIdx = Math.floor(Math.random() * firstPage.length);
+        const temp = firstPage[randomIdx];
+        firstPage[randomIdx] = img2;
+        remaining[alpacaInRemaining] = temp;
+      } else {
+        // Replace a random image in first page with alpaca
+        const randomIdx = Math.floor(Math.random() * firstPage.length);
+        firstPage[randomIdx] = img2;
+      }
+    }
+    
+    // Shuffle first page to randomize positions
+    const shuffledFirstPage = shuffleArray(firstPage);
+    
+    // Shuffle remaining and take first 9 for second page
+    const shuffledRemaining = shuffleArray(remaining);
+    
+    return [...shuffledFirstPage, ...shuffledRemaining.slice(0, 9)];
+  };
+
+  const [items, setItems] = useState(createBalancedInitialImages());
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [showError, setShowError] = useState(false);
@@ -309,23 +381,23 @@ const VisualSelectionPicture = () => {
     <div className="page-wrapper">
       <main className="welcome-main">
         <ProcessBar steps={steps} currentStep={currentStep} />
-        <div className="intro-container">
-          <h1 className="intro-title">Identification of Previously Cast Ballots</h1>
-          <div className="text-main text-main-confirmation">
+        <div className="intro-container intro-selection">
+          <h1 className="intro-heading">Identification of Previously Cast Ballots</h1>
+          <div className="text-main text-main-confirmation text-main-selection">
             Please select all pictures below that you have seen when casting your previous ballots.
           </div>
-          <div className="security-box" style={{ maxWidth: 800, margin: '20px auto' }}>
+          <div className="security-box-selection">
             <p className="text-small">
               <strong>Security Feature:</strong><br/>
               This process allows you to update your vote securely and privately. It helps ensure your voting decisions are made by you.
             </p>
           </div>
         </div>
-        <div className="card" style={{ maxWidth: 1000, width: "100%", position: "relative" }}>
-          <h1 style={{ width: "100%", textAlign: "left", margin: "0 0 10px 55px" }}>
+        <div className="card-wide">
+          <h1 className="card-heading-select" style={{ width: "100%", textAlign: "left", margin: "0 0 10px 40px" }}>
             Select your pictures
           </h1>
-          <div className="instruction-list" style={{ maxWidth: "800px", margin: "0 auto 0px auto", textAlign:"left" }}>
+          <div className="instruction-list" style={{ maxWidth: "800px", margin: "0 auto 20px auto", textAlign: "left", paddingLeft: "35px" }}>
             <ul>
               <li>You must select <strong>all</strong> the pictures below that you have seen when casting your previous ballots. This includes pictures from both valid and invalid ballots.</li>
               <li>The system will not reveal if your selection is correct for security reasons.</li>
@@ -385,9 +457,8 @@ const VisualSelectionPicture = () => {
     </div>
   </div>
 </div>
-<hr className="filter-divider-visual" style={{ width: "95%" }} />
-          
-          <div className="selected-scroll-wrapper">
+
+        <div className="selected-scroll-wrapper">
             <div className="selected-count-inside">
               {selected.length} selected
             </div>
@@ -396,8 +467,10 @@ const VisualSelectionPicture = () => {
               Scroll through the pictures and use the "Next page" button below to see more.
             </p>
           </div>
-          
-          <div className="pictures-scroll-container">
+
+          {/* Wrap the grid with a container */}
+          <div className="visual-selection-grid-container">
+            <div className="pictures-scroll-container">
             <div className="visual-select-grid-pictures">
               {filteredItems.length === 0 ? (
                 <p className="no-pictures-message">No pictures found. Try adjusting your search.</p>
@@ -423,6 +496,8 @@ const VisualSelectionPicture = () => {
               )}
             </div>
           </div>
+          </div>
+          {/* Navigation buttons below */}
           <div className="pagination-buttons" style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "16px" }}>
             <button className="button" onClick={() => setPage(page - 1)} disabled={page === 0}>
               ← Previous page
