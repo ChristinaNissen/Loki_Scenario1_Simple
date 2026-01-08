@@ -41,7 +41,6 @@ const VotedBefore = () => {
   const stepsNo = ["Voted Before", "Voting", "Confirmation"];
   const stepsYes = ["Voted Before", "Identification of Previous Ballots", "Voting", "Confirmation"];
 
- 
   return (
     <div className="page-wrapper">
       <main className="welcome-main" >
@@ -81,7 +80,7 @@ const VotedBefore = () => {
             </div>
           </div>
         </div>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: 30 }} className="button-container-voted-before">
         <button className="button next-voted-before" onClick={handleNext}>
             Next
           </button>
@@ -106,4 +105,3 @@ const VotedBefore = () => {
 };
 
 export default VotedBefore;
-

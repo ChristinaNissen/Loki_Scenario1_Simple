@@ -382,7 +382,7 @@ const VisualSelectionPicture = () => {
       <main className="welcome-main">
         <ProcessBar steps={steps} currentStep={currentStep} />
         <div className="intro-container intro-selection">
-          <h1 className="intro-heading">Identification of Previously Cast Ballots</h1>
+          <h1 className="intro-heading">Identification <span className="break-after-of">of</span> Previously Cast Ballots</h1>
           <div className="text-main text-main-confirmation text-main-selection">
             Please select all pictures below that you have seen when casting your previous ballots.
           </div>
@@ -464,7 +464,7 @@ const VisualSelectionPicture = () => {
             </div>
             
             <p className="scroll-instruction-text">
-              Scroll through the pictures and use the "Next page" button below to see more.
+              Scroll through the pictures and use the arrows below to see more.
             </p>
           </div>
 
@@ -475,35 +475,37 @@ const VisualSelectionPicture = () => {
               {filteredItems.length === 0 ? (
                 <p className="no-pictures-message">No pictures found. Try adjusting your search.</p>
               ) : (
-                pagedItems.map((imgSrc, idx) => {
-                  const globalIdx = page * PAGE_SIZE + idx;
-                  return (
-                    <div
-                      key={globalIdx}
-                      className={`visual-selection-picture${selected.includes(globalIdx) ? " selected" : ""}`}
-                      onClick={() => handleSelect(globalIdx)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <div className="picture-img-wrapper">
-                        <img src={imgSrc} alt={`visual-${globalIdx}`} />
+                <>
+                  {pagedItems.map((imgSrc, idx) => {
+                    const globalIdx = page * PAGE_SIZE + idx;
+                    return (
+                      <div
+                        key={globalIdx}
+                        className={`visual-selection-picture${selected.includes(globalIdx) ? " selected" : ""}`}
+                        onClick={() => handleSelect(globalIdx)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div className="picture-img-wrapper">
+                          <img src={imgSrc} alt={`visual-${globalIdx}`} />
+                        </div>
+                        <div className="picture-label">
+                          {getDisplayName(imgSrc)}
+                        </div>
                       </div>
-                      <div className="picture-label">
-                        {getDisplayName(imgSrc)}
-                      </div>
-                    </div>
-                  );
-                })
+                    );
+                  })}
+                </>
               )}
             </div>
           </div>
           </div>
           {/* Navigation buttons below */}
-          <div className="pagination-buttons" style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "16px" }}>
-            <button className="button" onClick={() => setPage(page - 1)} disabled={page === 0}>
-              ← Previous page
+         <div className="pagination-buttons" style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "16px" }}>
+            <button className="button" onClick={() => setPage(page - 1)} disabled={page === 0} aria-label="Previous page">
+              ←
             </button>
-            <button className="button" onClick={() => setPage(page + 1)} disabled={page >= totalPages - 1}>
-              Next page →
+            <button className="button" onClick={() => setPage(page + 1)} disabled={page >= totalPages - 1} aria-label="Next page">
+              →
             </button>
           </div>
         </div>

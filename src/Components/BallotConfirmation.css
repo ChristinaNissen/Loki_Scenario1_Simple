@@ -193,26 +193,36 @@ background-color: rgba(255, 255, 204, 0.8);
 
 @media (max-width: 600px) {
 
-
+.card-wide h1.card-title,
+  .card-wide .card-title {
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 0;
+  }
+  
   .text-main.text-main-confirmation{
     text-align:center!important;
+    width:90%;
+    margin-left:auto;
+    margin-right:auto; 
   }
+  
   .intro-container{
-   width: 90vw !important;
+    width: 90vw !important;
     max-width: 90vw !important;
     margin-left: auto !important;
     margin-right: auto !important;
     padding: 0 !important;
     box-sizing: border-box !important;
-
   }
-  .security-box{
-    width: 90% !important;
-    max-width: 90% !important;
-    margin: 20px auto !important;
-    box-sizing: border-box !important;
-    text-align: center !important;
 
+  .security-box-confirmation{
+     width: 100vw;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 8px;
+    box-sizing: border-box;
   }
 
    .card-wide.card-confirmation {

@@ -1,3 +1,40 @@
+/* Pagination arrows responsive: hide label on mobile, keep only arrow */
+.pagination-arrow .arrow-label {
+  display: inline;
+}
+.pagination-arrow .arrow-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: inline;
+}
+
+@media (max-width: 600px) {
+    .visual-select-grid-pictures {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+      padding: 10px 5px !important;
+      margin-top: 20px !important;
+      margin-bottom: 20px !important;
+      justify-items: center !important;
+    }
+  .pagination-arrow .arrow-label {
+    display: none !important;
+  }
+  .pagination-arrow .arrow-text {
+    font-size: 2rem !important;
+    display: inline-block !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Responsive: Insert line break after 'of' in first h1.intro-heading on mobile */
+@media (max-width: 600px) {
+  h1.intro-heading .break-after-of::after {
+    content: "\A";
+    white-space: pre;
+    display: inline;
+  }
+}
 
 .security-box-selection {
   max-width: 700px;
@@ -13,19 +50,7 @@
   box-sizing: border-box;
 }
 
-.security-box-selection {
-  max-width: 700px;
-  width: 100%;
-  margin: 20px auto;
-   background-color: rgba(255, 255, 204, 0.8);
-  border: 2px solid #ffe066;
-  padding: 18px 24px;
-  font-size: 1.05rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-  text-align: left;
-  border-radius: 0;
-  box-sizing: border-box;
-}
+
 
 .button:disabled {
   background: #eee;
@@ -80,12 +105,10 @@
   background: #fff;
   padding: 0;
   font-size: 0;
-}
+  }
 
-/* Remove the global img style that was overriding */
-.visual-selection-picture img {
-  /* Styles now handled by .picture-img-wrapper img */
-}
+
+
 
 /* Hover effect using a pseudo-element overlay */
 .visual-selection-picture::after {
@@ -259,6 +282,7 @@
   text-align: center;
   border: 1px solid #d1d5db;
   white-space: nowrap;
+  margin-left: 0!important;
 }
 
 /* Scroll instruction text */
@@ -279,7 +303,7 @@
 /* Right align selected count in normal design only */
 @media (min-width: 601px) {
   .selected-count-inside {
-    margin-left: auto !important;
+    margin-left: 0 !important;
     margin-right: 0 !important;
   }
 }
@@ -294,7 +318,51 @@
   padding: 0;
   line-height: 0;
   font-size: 0;
-}
+  }
+    .visual-selection-picture {
+      width: 100% !important;
+      border: 1.5px solid #c1bfbfff !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: stretch !important;
+      overflow: hidden !important;
+    }
+    .picture-img-wrapper {
+      width: 100% !important;
+      height: 130px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+      display: block !important;
+    }
+    .picture-img-wrapper img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      border: none !important;
+      box-sizing: border-box !important;
+      background: #fff !important;
+    }
+    .picture-label {
+      font-size: 0.9rem !important;
+      min-height: 28px !important;
+      height: 28px !important;
+      padding: 2px 4px !important;
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      line-height: 1.2 !important;
+      background: #fff !important;
+      border-top: 1px solid #e0e0e0 !important;
+    }
 
 .picture-img-wrapper img {
   width: 100%;
@@ -564,25 +632,91 @@
     padding: 0 10px !important;
   }
 
-  .selected-scroll-wrapper {
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
-    margin-bottom: 12px !important;
+  .security-box-selection{
+    width: 100vw !important;
+    max-width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 12px 8px !important;
+    box-sizing: border-box !important;
+    font-size: 15.52px !important;
+  }
+
+   .intro-container,
+  .intro-container.intro-selection {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    margin: 0 auto 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+
+  .intro-heading {
+    text-align: center !important;
+    font-size: 22.4px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+
+  .intro-heading .break-responsive::before {
+    content: "\A";
+    white-space: pre;
+  }
+
+  .text-main.text-main-selection,
+  .text-main.text-main-confirmation.text-main-selection {
+    text-align: center !important;
+    width: 90% !important;
+    max-width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: none !important;
+  }
+
+
+  .card h1,
+  .card-heading-select {
+    text-align: left !important;
+    margin: 0 0 10px 20px !important;
+    font-size: 22.4px !important;
+    word-wrap: break-word !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 
   .selected-count-inside {
-    position: static !important;
-    display: block !important;
+    font-size: 15.52px !important;
+    padding: 10px 20px !important;
+    width: auto !important;
+    max-width: 95% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
     text-align: center !important;
-    font-size: 0.95rem !important;
-    padding: 8px 12px !important;
-    margin: 0 0 8px 0 !important;
-    background-color: #fafbfc !important;
-    border: 1.5px solid #d1d5db !important;
-    border-radius: 6px !important;
-    width: fit-content !important;
-    color: #666 !important;
+    font-weight: 600 !important;
+  }
+
+  .selected-scroll-wrapper {
+      order: 10 !important;
+    flex-direction: row !important;
+    gap: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-bottom: 16px !important;
+    margin-top: 20px !important;
+  }
+
+  .selected-count-inside {
+     font-size: 15.52px !important;
+    padding: 10px 20px !important;
+    width: auto !important;
+    max-width: 95% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    font-weight: 600 !important;
   }
 
   .scroll-instruction {
@@ -595,32 +729,42 @@
   }
 
   .scroll-instruction-text {
-    text-align: center !important;
-    font-size: 15.52px !important;
-    margin: 0 !important;
-    padding: 0 10px !important;
+    display:none!important;
   }
 
   .instruction-list {
     max-width: 100% !important;
-    margin: 0 auto 15px auto !important;
-    padding: 0 10px !important;
+    margin: 0 20px 20px 20px !important;
+    padding-top: 12px !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .instruction-list ul {
+    font-size: 15.52px !important;
+    color: #000 !important;
+    line-height: 1.65 !important;
     padding-left: 20px !important;
+    padding-right: 8px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    list-style-position: outside !important;
   }
 
   .instruction-list li {
-    font-size: 15.52px !important;
-    line-height: 1.4 !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 16px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
   }
 
   .filter-card {
+    width: 95% !important;
     max-width: 95% !important;
-    padding: 14px 16px !important;
-    margin: 0 auto 15px auto !important;
+    margin: 0 auto 18px auto !important;
+    padding: 12px 10px !important;
+    box-sizing: border-box !important;
   }
 
   .filter-headline {
@@ -679,7 +823,9 @@
   .visual-select-grid-pictures {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
-    padding: 0 !important;
+    padding: 10px 5px !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
     justify-items: center !important;
   }
 
@@ -699,7 +845,6 @@
 
   .picture-label {
     font-size: 0.85rem !important;
-    margin-top: 3px !important;
     padding: 0 4px 4px 4px !important;
   }
 
@@ -710,7 +855,15 @@
   }
 
   .pictures-scroll-container {
-    margin-bottom: 0px !important;
+    height: 450px !important;
+    overflow-y: auto !important;
+    padding: 0 10px !important;
+    margin: 0 auto !important;
+    width: 95% !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
   }
 
   .pagination-buttons {
@@ -825,6 +978,64 @@
 
   .no-pictures-message {
     font-size: 0.95rem !important;
+  }
+
+   /* Pagination buttons responsive */
+  .pagination-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 16px !important;
+    width: auto !important;
+    margin: 0 auto 16px auto !important;
+    justify-content: center !important;
+    align-items: center !important;
+    order: 11 !important;
+  }
+
+  .pagination-buttons .button.pagination-arrow {
+    width: 110px !important;
+    height: 70px !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    border-radius: 12px !important;
+    font-size: 2.2rem !important;
+    font-weight: bold !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 8px !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffd600 !important;
+    color: #000 !important;
+    transition: background 0.2s;
+    padding: 0 !important;
+  }
+  .pagination-buttons .button.pagination-arrow:disabled {
+    background: #f3f3f3 !important;
+    color: #bbb !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .pagination-arrow .arrow-label {
+    display: none !important;
+  }
+  .pagination-arrow .arrow-text {
+    font-size: 2.2rem !important;
+    display: block !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  /* Confirm selection button responsive */
+  .confirm-selection-button {
+    width: 95% !important;
+    max-width: 95% !important;
+    padding: 14px 20px !important;
+    font-size: 1.05rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    white-space: nowrap !important;
   }
 }
 
