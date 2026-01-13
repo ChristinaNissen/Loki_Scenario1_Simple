@@ -112,7 +112,7 @@ const allImages = [
   img91
 ];
 
-const PAGE_SIZE = 39;
+const PAGE_SIZE = 42;
 
 // Helper function: Fisher-Yates shuffle
 const shuffleArray = (array) => {
@@ -149,44 +149,37 @@ const VisualSelectionPicture = () => {
   const createBalancedInitialImages = () => {
     const letterGroups = groupByLetter();
     const letters = Object.keys(letterGroups);
-    
     // Shuffle images within each letter group
     Object.keys(letterGroups).forEach(letter => {
       letterGroups[letter] = shuffleArray(letterGroups[letter]);
     });
-    
-    // Take up to 2 images from each letter to create first page (39 images)
+    // Take up to 2 images from each letter to create first page (42 images)
     const firstPage = [];
     const remaining = [];
-    
     // First round: take 1 image from each letter
     letters.forEach(letter => {
       if (letterGroups[letter].length > 0) {
         firstPage.push(letterGroups[letter].shift());
       }
     });
-    
     // Second round: take another image from letters that have more
     letters.forEach(letter => {
-      if (letterGroups[letter].length > 0 && firstPage.length < 39) {
+      if (letterGroups[letter].length > 0 && firstPage.length < 42) {
         firstPage.push(letterGroups[letter].shift());
       }
     });
-    
-    // If we still need more images to reach 39, keep adding
-    while (firstPage.length < 39) {
+    // If we still need more images to reach 42, keep adding
+    while (firstPage.length < 42) {
       for (let letter of letters) {
-        if (letterGroups[letter].length > 0 && firstPage.length < 39) {
+        if (letterGroups[letter].length > 0 && firstPage.length < 42) {
           firstPage.push(letterGroups[letter].shift());
         }
       }
     }
-    
     // Collect remaining images
     letters.forEach(letter => {
       remaining.push(...letterGroups[letter]);
     });
-    
     // Ensure alpaca is in first page
     if (!firstPage.includes(img2)) {
       const alpacaInRemaining = remaining.indexOf(img2);
@@ -202,14 +195,11 @@ const VisualSelectionPicture = () => {
         firstPage[randomIdx] = img2;
       }
     }
-    
     // Shuffle first page to randomize positions
     const shuffledFirstPage = shuffleArray(firstPage);
-    
-    // Shuffle remaining and take first 9 for second page
+    // Shuffle remaining and take first (PAGE_SIZE - firstPage.length) for second page
     const shuffledRemaining = shuffleArray(remaining);
-    
-    return [...shuffledFirstPage, ...shuffledRemaining.slice(0, 9)];
+    return [...shuffledFirstPage, ...shuffledRemaining.slice(0, Math.max(0, PAGE_SIZE - shuffledFirstPage.length))];
   };
 
   const [items, setItems] = useState(createBalancedInitialImages());
