@@ -5,7 +5,7 @@ import "./Voting-system.css";
 import "./Voting.css";
 import ProcessBar from "./ProcessBar";
 import VoteContext from "../Contexts/VoteContext";
-import { saveVote, saveVote2, getCandidate, getBooleanSelection } from '../API/Voter.js';
+import { saveVote, getCandidate, getBooleanSelection } from '../API/Voter.js';
 
 
 
