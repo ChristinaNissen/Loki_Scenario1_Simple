@@ -54,7 +54,11 @@ const Voting = () => {
       if (!existingCandidate || existingCandidate === "") {
           await saveVote(candidateName);
           navigate("/confirmation", { state: { votedCandidate: candidateName }, replace: true });
+        } else {
+          // Candidate already exists, navigate without saving
+          navigate("/confirmation", { state: { votedCandidate: candidateName }, replace: true });
         }
+
     } catch (error) {
       console.error("Error handling vote confirmation:", error);
       // Fallback: save the vote anyway
