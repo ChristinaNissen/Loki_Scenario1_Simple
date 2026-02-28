@@ -44,7 +44,7 @@ const StudyInfo3 = () => {
             <div className="step-number">1</div>
             <div className="step-content">
               <p>
-This voting system is designed to help voters resist coercion. All candidates are fictional. In the first part of the study, you cast your true vote. In this second part, please imagine that you are being coerced after casting your true vote. To protect your original choice, we ask that you <strong>cast an invalid vote</strong> in this system.              </p>
+This voting system is designed to help voters resist coercion. All candidates are fictional. In the first part of the study, you cast your true vote in an election. In this second part, please imagine that you are being coerced after casting your true vote. To protect your original choice, we ask that you <strong>cast an invalid vote</strong> in the voting system.              </p>
               <label className="check-box blue-bg-highlight">
                 <input
                   type="checkbox"

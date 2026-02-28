@@ -44,7 +44,7 @@ const StudyInfo1 = () => {
             <div className="step-number">1</div>
             <div className="step-content">
               <p>
-                All candidates are fictional. For this first part of the study, we ask you to vote for a random candidate, as if this is your <strong>first time voting</strong> in the election using the voting system.
+                All candidates are fictional. For this first part of the study, we ask you to vote for the candidate 'John Doe', as if this is your <strong>first time voting</strong> in the election using the voting system.
               </p>
               <label className="check-box blue-bg-highlight">
                 <input

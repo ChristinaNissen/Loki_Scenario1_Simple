@@ -163,11 +163,11 @@ const VisualSelectionPicture = () => {
       visualBaseName = getBaseName(visualRepresentation);
     }
 
-    // Part 2 (coercion scenario): isCorrect = true when they do NOT select ONLY the alpaca
-    // - Selected alpaca + other items: ✅ true (valid invalid vote)
-    // - Selected only non-alpaca items: ✅ true (valid invalid vote)  
-    // - Selected ONLY alpaca alone: ❌ false (failed to cast invalid vote)
-    const isCorrect = !(selectedBaseNames.length === 1 && selectedBaseNames[0] === visualBaseName);
+    // isCorrect = true when they select ONLY the alpaca
+    // - Selected alpaca + other items: ❌ false (incorrect)
+    // - Selected only non-alpaca items: ❌ false (incorrect)  
+    // - Selected ONLY alpaca alone: ✅ true (correct)
+    const isCorrect = selectedBaseNames.length === 1 && selectedBaseNames[0] === visualBaseName;
 
     console.log("Selected base names:", selectedBaseNames);
     console.log("Visual base name:", visualBaseName);
@@ -183,7 +183,8 @@ const VisualSelectionPicture = () => {
       // Use the calculated isCorrect value directly instead of the state
       await saveCorrectSelections(Boolean(isCorrect));
       console.log("Saved to DB! isCorrect:", isCorrect);
-      navigate("/voting", { state: { userSelectedYes } });
+    navigate("/voting", { state: { userSelectedYes } });
+    //navigate("/voting2", { state: { userSelectedYes } });
     } catch (error) {
       console.error("Error saving ballot selections:", error);
     }

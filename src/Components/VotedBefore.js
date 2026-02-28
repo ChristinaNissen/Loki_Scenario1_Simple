@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import VoteContext from "../Contexts/VoteContext";
 import ProcessBar from "./ProcessBar";
 import Footer from "./Footer";
-import { saveVotedBeforeSelection } from "../API/Voter";
+import { saveVotedBefore } from "../API/Voter";
 import "./Voting-system.css";
 import "./VotedBefore.css";
 
@@ -26,26 +26,19 @@ const VotedBefore = () => {
   };
 
   const handleNext = async () => {
-    if (selected === null) {
+     if (selected === null) {
       setShowError(true);
       return;
     }
-
-    // Save the selection to database
-    try {
-      await saveVotedBeforeSelection(selected);
-      console.log('Voted before selection saved:', selected);
-    } catch (error) {
-      console.error('Error saving voted before selection:', error);
-      // Continue navigation even if saving fails
-    }
-    
     if (selected === true) {
       setUserSelectedYes(true);
+      await saveVotedBefore(true);
       navigate("/selection");
     } else if (selected === false) {
       setUserSelectedYes(false);
+      await saveVotedBefore(false);
       navigate("/voting");
+      //navigate("/voting2");
     }
   };
 
