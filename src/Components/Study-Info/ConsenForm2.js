@@ -57,7 +57,7 @@ const ConsentForm2 = () => {
         </p>
           <h3 className="title-margin-top">Ethical Considerations and Your Wellbeing</h3>
         <p>
-          The voting system you are testing is designed to help prevent coercion in online voting. In the following survey, you may be asked questions such as "Imagine you are coerced, what do you do?" These questions are intended to understand how users might respond to coercion scenarios and to improve the security of online voting. If you feel any discomfort or distress from these questions or the study in general, you may leave the study at any time without penalty.
+          The voting system you are testing is designed to help prevent coercion in online voting. In the study, you may be instructed to "Imagine you are coerced, cast an invalid vote in the voting system." These instructions are intended to understand whether users can use the voting system under such scenarios. If you feel any discomfort or distress from these instructions or the study in general, you may leave the study at any time without penalty.
         </p>
         <h3 className="title-margin-top">Compensation</h3>
         <p>
@@ -127,18 +127,18 @@ const ConsentForm2 = () => {
             </a>
           </li>
           <li className="text-margin-top">
-            <span className="bold-text">Netlify:</span> We use Netlify to host
-            the voting system. Netlify might collect your IP address and other
+            <span className="bold-text">Vercel:</span> We use Vercel to host
+            the voting system. Vercel might collect your IP address and other
             personal data, however, we will not have access to this data and
-            netlify is not sharing any IP addresses or other personal data.
-            Please refer to netlify’s privacy policy for more information:{" "}
+            Vercel is not sharing any IP addresses or other personal data.
+            Please refer to Vercel’s privacy policy for more information:{" "}
             <a
               className="info-link"
-              href="https://www.netlify.com/privacy/"
+              href="https://vercel.com/privacy"
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://www.netlify.com/privacy/
+              https://vercel.com/privacy
             </a>
           </li>
           <li className="text-margin-top">
