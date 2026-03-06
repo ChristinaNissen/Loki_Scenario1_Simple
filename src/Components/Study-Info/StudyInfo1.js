@@ -53,7 +53,7 @@ const StudyInfo1 = () => {
                   onChange={handleChangeCheckbox}
                   className="blue-bg-highlight"
                 />
-                I understand and will vote as if this is my first time voting in the election.
+                I understand and will cast a vote for 'John Doe' as if this is my first time voting in the election.
               </label>
             </div>
           </div>
