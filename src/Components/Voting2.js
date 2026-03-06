@@ -5,7 +5,7 @@ import "./Voting-system.css";
 import "./Voting.css";
 import ProcessBar from "./ProcessBar";
 import VoteContext from "../Contexts/VoteContext";
-import { saveVote, getCandidate, getBooleanSelection, getVotedBefore } from '../API/Voter.js';
+import { saveVote, getBooleanSelection, getVotedBefore } from '../API/Voter.js';
 
 
 
@@ -48,7 +48,6 @@ const Voting = () => {
     
     try {
       // Get the existing candidate from the database
-      const existingCandidate = await getCandidate();
       const votedBefore = await getVotedBefore();
      
       // If candidate exists, check if correct selections is true
@@ -59,7 +58,7 @@ const Voting = () => {
         navigate("/confirmation2", { state: { votedCandidate: candidateName }, replace: true });
       } else {
         await saveVote(candidateName);
-        navigate("/confirmation2", { state: { votedCandidate: existingCandidate }, replace: true });
+        navigate("/confirmation2", { state: { votedCandidate: candidateName }, replace: true });
       }
     } catch (error) {
       console.error("Error handling vote confirmation:", error);
