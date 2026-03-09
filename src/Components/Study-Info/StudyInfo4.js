@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getUserID, logoutVoter } from "../../API/Voter";
 import "./study-info.css";
 
-const StudyInfo2 = () => {
+const StudyInfo4 = () => {
   const [userID, setUserID] = useState(null);
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
 
@@ -128,4 +128,4 @@ const StudyInfo2 = () => {
   );
 };
 
-export default StudyInfo2;
+export default StudyInfo4;
