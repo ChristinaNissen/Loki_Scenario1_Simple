@@ -15,8 +15,7 @@ const Login = ({ setIsLoggedIn }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [userIDError, setUserIDError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [showStudyModal, setShowStudyModal] = useState(false);
-  const [hasShownModal, setHasShownModal] = useState(false);
+  const [showStudyModal, setShowStudyModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
@@ -149,12 +148,6 @@ const handleSubmit = async (e) => {
               placeholder ="Enter Prolific ID"
               value={userID}
               onChange={(e) => setUserID(e.target.value)}
-              onFocus={() => {
-                if (!hasShownModal) {
-                  setShowStudyModal(true);
-                  setHasShownModal(true);
-                }
-              }}
               className="login-input"
               autoComplete="username"
             />
@@ -201,8 +194,9 @@ const handleSubmit = async (e) => {
             <div className="study-modal" onClick={(e) => e.stopPropagation()}>
               <h2>Study Information</h2>
               <p>
-                Since this is a research study, please use your <strong>Prolific ID</strong> for both the ID and Password fields.<br /><br />
-                In a real election, this login would require actual credentials for security purposes.
+                For this study, please use your <strong>Prolific ID</strong> as both your ID and password.<br /><br />
+                Your Prolific ID is salted and hashed before it is stored in this system. We do not store your raw Prolific ID in this database.<br /><br />
+                In a real election, this login would use secure personal credentials.
               </p>
               <div className="study-modal-actions">
                 <button className="study-button" onClick={() => setShowStudyModal(false)}>
