@@ -17,11 +17,6 @@ const infoData = [
 			"For a secure and reliable voting experience, use a modern web browser (such as the latest version of Chrome, Firefox, Safari, or Edge) and a stable internet connection.",
 	},
 	{
-		title: "Protection Against Coercion",
-		content:
-			"This voting system is designed to protect your vote from coercion or undue influence. Your selections remain confidential, and no one can verify how you voted in the election.",
-	},
-	{
 		title: "Need Assistance?",
 		content: (
 			<>
