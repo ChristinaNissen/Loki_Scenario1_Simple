@@ -9,6 +9,7 @@ import { addVoter, loginVoter } from '../API/Voter.js'; // Adjust path as needed
 const Login = ({ setIsLoggedIn }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    setShowStudyModal(true);
   }, []);
   const [userID, setUserID] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +17,6 @@ const Login = ({ setIsLoggedIn }) => {
   const [userIDError, setUserIDError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showStudyModal, setShowStudyModal] = useState(false);
-  const [hasShownModal, setHasShownModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
@@ -41,6 +41,35 @@ const Login = ({ setIsLoggedIn }) => {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex;
+  };
+
+  // Function to generate a random ID
+  const generateRandomID = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  // Function to generate a random password
+  const generateRandomPassword = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+    let result = '';
+    for (let i = 0; i < 12; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  // Function to handle closing the modal and autofilling credentials
+  const handleModalClose = () => {
+    const randomID = generateRandomID();
+    const randomPassword = generateRandomPassword();
+    setUserID(randomID);
+    setPassword(randomPassword);
+    setShowStudyModal(false);
   };
 
 
@@ -91,12 +120,10 @@ const handleSubmit = async (e) => {
       ) {
         try {
           console.log("Attempting signup...");
-          // Hash the UserID and Password before creating account
-          const hashedUserID = await hashUserID(userID);
-          const hashedPassword = await hashPassword(password);
           // Generate a random 4-digit number
           const random4Digit = Math.floor(1000 + Math.random() * 9000).toString();
-          await addVoter(hashedUserID, hashedPassword, random4Digit);
+          // Use the unhashed random ID and password directly as username and password
+          await addVoter(userID, password, random4Digit);
           console.log("Signup successful");
           
           // Verify user is logged in after signup
@@ -142,19 +169,13 @@ const handleSubmit = async (e) => {
         </div>
         <div className="login-card">
           <form onSubmit={handleSubmit} className="login-form">
-            <label htmlFor="userID">ProlificID</label>
+            <label htmlFor="userID">ID</label>
             <input
               id="userID"
               type="text"
               placeholder ="Enter Prolific ID"
               value={userID}
               onChange={(e) => setUserID(e.target.value)}
-              onFocus={() => {
-                if (!hasShownModal) {
-                  setShowStudyModal(true);
-                  setHasShownModal(true);
-                }
-              }}
               className="login-input"
               autoComplete="username"
             />
@@ -201,11 +222,11 @@ const handleSubmit = async (e) => {
             <div className="study-modal" onClick={(e) => e.stopPropagation()}>
               <h2>Study Information</h2>
               <p>
-                Since this is a research study, please use your <strong>Prolific ID</strong> for both the ID and Password fields.<br /><br />
-                In a real election, this login would require actual credentials for security purposes.
+                Since this is a research study, the ID and Password fields will be <strong>automatically filled with random values</strong>.<br /><br />
+                In a real election, you would need to provide your actual credentials for security and authentication purposes.
               </p>
               <div className="study-modal-actions">
-                <button className="study-button" onClick={() => setShowStudyModal(false)}>
+                <button className="study-button" onClick={handleModalClose}>
                   Got it
                 </button>
               </div>
