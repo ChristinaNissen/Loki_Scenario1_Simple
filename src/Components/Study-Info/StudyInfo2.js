@@ -41,7 +41,7 @@ const StudyInfo2 = () => {
           style={{ marginTop: "2rem" }}
           onClick={async () => {
             await logoutVoter();
-            window.location.href = "https://app.prolific.com/submissions/complete?cc=C1IEU49A";
+            window.location.href = "https://app.prolific.com/submissions/complete?cc=C1Q49A6X";
           }}
         >
           Return to Prolific
