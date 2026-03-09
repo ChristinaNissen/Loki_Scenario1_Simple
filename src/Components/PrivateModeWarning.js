@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PrivateModeWarning.css";
 import Footer from "./Footer";
 import "./Voting-system.css";
-import { FaItalic } from "react-icons/fa";
 import video from "../Assets/private1.mp4";
 
 const PrivateModeWarning = () => {
   const navigate = useNavigate();
+  const [showStudyModal, setShowStudyModal] = useState(true);
 
- 
+  const handleLoginClick = () => {
+    setShowStudyModal(false);
+    navigate("/login");
+  };
 
   return (
     <div className="page-wrapper">
       <main className="welcome-main ">
         <h1>Private Browsing Recommended</h1>
         <div className="text-main text-main-private">See below how to enable private browsing mode when using the voting platform.</div>
-        <div className="security-box">
+        <div className="security-box-warning">
           <p className="text-small">
            <strong>Security Feature:</strong><br/>
           For your security and privacy, please use your browser's private (incognito)
@@ -106,6 +109,24 @@ const PrivateModeWarning = () => {
         >
           Login
         </a>
+
+        {showStudyModal && (
+          <div className="study-modal-backdrop">
+            <div className="study-modal study-modal-static" onClick={(e) => e.stopPropagation()}>
+              <h2>Study Information</h2>
+
+              <p>
+                For the purposes of this study, please do not use private browsing.<br /><br />
+                To ensure your interaction is properly registered, simply click the <strong>login</strong> button below to proceed.
+              </p>
+              <div className="study-modal-actions">
+                <button style={{ fontWeight: "bold" }} className="study-button" onClick={handleLoginClick}>
+                  Login
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
       <Footer />
     </div>
