@@ -26,8 +26,7 @@ const ConsentForm = () => {
       <div className="inner-box-info padding-top-info-page" style={{ maxWidth: "35rem" }}>
         <h1 className="h1-info-pages">Welcome to our study!</h1>
         <p>
-          The purpose of this study is to investigate user experience
-          when casting a true vote in an online voting system intended for general elections.
+          The purpose of this study is to investigate user experience in an online voting system intended for general elections. Before proceeding, we ask for your consent.
         </p>
         <h3 className="title-margin-top">Description of research</h3>
         <p>
@@ -52,7 +51,7 @@ const ConsentForm = () => {
           >
             https://participant-help.prolific.com/en/articles/445041-how-to-return-a-submission-on-prolific
           </a>
-          After completing the study, you may still request to have your data deleted until 14 days after submitting the survey by contacting the researhers and provide your Prolific ID, which allows us to locate and remove your data. After this deadline, it will no longer be possible to delete your data.
+          After completing the study, you may still request to have your data deleted until 14 days after submitting the survey by contacting the researchers and providing your Prolific ID, which allows us to locate and remove your data. After this deadline, it will no longer be possible to delete your data.
         </p>
           <h3 className="title-margin-top">Ethical Considerations and Your Wellbeing</h3>
         <p>
