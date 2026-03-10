@@ -18,7 +18,7 @@ const StudyInfo1 = () => {
   const downloadInstructions = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    downloadFile(Instructions, "General-Election-2023.pdf");
+    downloadFile(Instructions, "General-Election-2025.pdf");
   };
 
   const handleStart = (e) => {
