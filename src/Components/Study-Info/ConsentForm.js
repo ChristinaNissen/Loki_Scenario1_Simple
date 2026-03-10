@@ -55,8 +55,7 @@ const ConsentForm = () => {
         </p>
           <h3 className="title-margin-top">Ethical Considerations and Your Wellbeing</h3>
         <p>
-          The voting system you are testing is designed to help prevent coercion in online voting. In the study, you may be instructed to "Imagine you are coerced, cast an invalid vote in the voting system." These instructions are intended to understand whether users can use the voting system under such scenarios. If you feel any discomfort or distress from these instructions or the study in general, you may leave the study at any time without penalty.
-        </p>
+The voting system you are testing is designed to help prevent coercion in online voting. During the study, you may encounter situations that explore how the system handles different voting scenarios. If you experience any discomfort or distress at any point, you can leave the study without any penalty.        </p>
         <h3 className="title-margin-top">Compensation</h3>
         <p>
           Each participant will receive 1.5 £ at the conclusion of the study
