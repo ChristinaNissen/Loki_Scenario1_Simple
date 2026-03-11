@@ -6,7 +6,7 @@ import "./BallotConfirmation.css";
 import ProcessBar from "./ProcessBar.js"; 
 import { useLocation } from "react-router-dom";
 import VoteContext from "../Contexts/VoteContext";
-import { saveVisuaRepresentation, setSessionEnd } from "../API/Voter";
+import { saveVisuaRepresentation, setSessionEnd, setEndTimeSecondPhase } from "../API/Voter";
 
 // Import your images
 /*import img4 from "../Images/alligator.jpg";
@@ -155,7 +155,8 @@ function BallotConfirmationPicture2(setIsLoggedIn) {
   const handleLogout = async () => {
        try {
           await saveVisuaRepresentation({ image_visual: "alpaca" });
-           await setSessionEnd();
+          await setEndTimeSecondPhase();
+          await setSessionEnd();
          navigate("/studyinfo4");
        } catch (error) {
          console.error("Error during logout:", error);

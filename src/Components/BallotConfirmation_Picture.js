@@ -6,7 +6,7 @@ import "./BallotConfirmation.css";
 import ProcessBar from "./ProcessBar.js"; 
 import { useLocation } from "react-router-dom";
 import VoteContext from "../Contexts/VoteContext";
-import { saveVisuaRepresentation, setSessionEnd } from "../API/Voter";
+import { saveVisuaRepresentation, setSessionEnd, setEndTimeFirstPhase } from "../API/Voter";
 
 // Import your images
 //import img4 from "../Images/alligator.jpg";
@@ -155,6 +155,7 @@ function BallotConfirmationPicture(setIsLoggedIn) {
   const handleLogout = async () => {
        try {
           await saveVisuaRepresentation({ image_visual: "ice_cream" });
+          await setEndTimeFirstPhase();
            await setSessionEnd();
          navigate("/studyinfo2");
        } catch (error) {

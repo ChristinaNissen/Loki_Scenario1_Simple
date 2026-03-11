@@ -61,7 +61,7 @@ export default function getCurrentUser() {
 
 export async function saveVote(vote1) {
   const Voter = getCurrentUser();
-  const timestamp = new Date().toLocaleString();
+  const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Europe/Copenhagen' });
   const voteWithTimestamp = `${vote1}_${timestamp}`;
   Voter.set("Candidate", voteWithTimestamp);
   try {
@@ -73,7 +73,7 @@ export async function saveVote(vote1) {
 
 export async function saveVote2(vote2) {
   const Voter = getCurrentUser();
-  const timestamp = new Date().toLocaleString();
+  const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Europe/Copenhagen' });
   const voteWithTimestamp = `${vote2}_${timestamp}`;
   Voter.set("Candidate", voteWithTimestamp);
   try {
@@ -203,6 +203,40 @@ export async function setSessionEnd() {
     throw error;
   }
 }
+
+// Set EndTimeFirstPhase to current date for the current user
+export async function setEndTimeFirstPhase() {
+  const user = Parse.User.current();
+  if (!user) {
+    throw new Error("No user is currently logged in");
+  }
+  try {
+    user.set("EndTimeFirstPhase", new Date().toLocaleString('en-US', { timeZone: 'Europe/Copenhagen' }));
+    await user.save();
+    return true;
+  } catch (error) {
+    console.error("Error setting EndTimeFirstPhase:", error);
+    throw error;
+  }
+}
+
+// Set EndTimeSecondPhase to current date for the current user
+export async function setEndTimeSecondPhase() {
+  const user = Parse.User.current();
+  if (!user) {
+    throw new Error("No user is currently logged in");
+  }
+  try {
+    user.set("EndTimeSecondPhase", new Date().toLocaleString('en-US', { timeZone: 'Europe/Copenhagen' }));
+    await user.save();
+    return true;
+  } catch (error) {
+    console.error("Error setting EndTimeSecondPhase:", error);
+    throw error;
+  }
+}
+
+
 
 // Save the user's selection on "Have you voted before?" page
 export async function saveVotedBefore(votedBefore) {
